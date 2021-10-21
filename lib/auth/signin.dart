@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:vegifood/dbfunctions/authfunctions/googleauth.dart';
+import 'package:vegifood/screens/homescreen.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -7,6 +9,8 @@ class SignInPage extends StatefulWidget {
   @override
   _SignInPageState createState() => _SignInPageState();
 }
+
+GoogleAuthService googleAuthService = GoogleAuthService();
 
 class _SignInPageState extends State<SignInPage> {
   @override
@@ -25,6 +29,7 @@ class _SignInPageState extends State<SignInPage> {
           // ignore: prefer_const_literals_to_create_immutables
           children: [
             Column(
+              // ignore: prefer_const_literals_to_create_immutables
               children: [
                 const Text('Sign in to continue'),
               ],
@@ -40,8 +45,12 @@ class _SignInPageState extends State<SignInPage> {
                 ],
               ),
             ),
-            SignInButton(Buttons.Google,
-                text: 'Sign in With Google', onPressed: () {}),
+            SignInButton(Buttons.Google, text: 'Sign in With Google',
+                onPressed: () async {
+              googleAuthService.googleSignUp();
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (ctx) => HomeScreen()));
+            }),
             SignInButton(Buttons.Apple,
                 text: 'Sign in With Apple', onPressed: () {}),
             Text(
