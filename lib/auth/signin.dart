@@ -48,8 +48,6 @@ class _SignInPageState extends State<SignInPage> {
             SignInButton(Buttons.Google, text: 'Sign in With Google',
                 onPressed: () async {
               googleAuthService.googleSignUp();
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (ctx) => HomeScreen()));
             }),
             SignInButton(Buttons.Apple,
                 text: 'Sign in With Apple', onPressed: () {}),

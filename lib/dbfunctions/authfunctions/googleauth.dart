@@ -19,6 +19,11 @@ class GoogleAuthService {
       );
 
       final User? user = (await _auth.signInWithCredential(credential)).user;
+      // if (user != null) {
+      //   Navigator.pushReplacement(
+      //       context, MaterialPageRoute(builder: (ctx) => HomeScreen()));
+      // }
+
       // print("signed in " + user.displayName);
 
       return user;

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:vegifood/config/config.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -13,14 +14,11 @@ class _MyDrawerState extends State<MyDrawer> {
   //Functions
   Widget listTile({required IconData icon, required String title}) {
     return ListTile(
-      leading: Icon(
-        icon,
-        size: 12,
-      ),
+      leading: Icon(icon, size: 24),
       title: Text(
         title,
         style: TextStyle(
-          color: Colors.black54,
+          color: textColor,
         ),
       ),
     );
@@ -30,7 +28,7 @@ class _MyDrawerState extends State<MyDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-        color: const Color(0xffd4d181),
+        color: primaryColor,
         child: ListView(
           children: [
             DrawerHeader(
@@ -85,6 +83,14 @@ class _MyDrawerState extends State<MyDrawer> {
             listTile(icon: Icons.favorite_outline, title: "Wishlist"),
             listTile(icon: Icons.copy_outlined, title: "Raise a complaint"),
             listTile(icon: Icons.format_quote_outlined, title: "FAQs"),
+            Divider(
+              height: 10,
+              thickness: 1,
+              color: textColor,
+            ),
+            SizedBox(
+              height: 10,
+            ),
             Container(
               height: 350,
               padding: EdgeInsets.symmetric(horizontal: 20),
@@ -92,19 +98,23 @@ class _MyDrawerState extends State<MyDrawer> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text('Contact Support'),
-                  const SizedBox(
+                  SizedBox(
                     height: 10,
                   ),
+
                   // ignore: prefer_const_literals_to_create_immutables
                   Row(
                     // ignore: prefer_const_literals_to_create_immutables
                     children: [
                       Text('Call Us'),
+                      SizedBox(
+                        width: 16,
+                      ),
                       Text('+923070684743'),
                     ],
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 10,
                   ),
                   SingleChildScrollView(
                     child: Row(
