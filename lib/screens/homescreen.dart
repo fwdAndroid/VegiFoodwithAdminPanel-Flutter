@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:vegifood/config/config.dart';
 import 'package:vegifood/dbfunctions/constructorclasses/singleproductherb.dart';
+import 'package:vegifood/screens/Product/productoverview.dart';
 import 'package:vegifood/widget/drawer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -240,7 +241,11 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               SingleProductHerb(
                 onTap: () {
-                  print('Fawad');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProductOverviewPage()),
+                  );
                 },
                 productImage:
                     'https://media.newyorker.com/photos/5bc7551925cbcf2d7f5b7ea1/master/pass/Hercules-Herbs.jpg',
