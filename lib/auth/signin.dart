@@ -47,7 +47,7 @@ class _SignInPageState extends State<SignInPage> {
             ),
             SignInButton(Buttons.Google, text: 'Sign in With Google',
                 onPressed: () async {
-              googleAuthService.googleSignUp();
+              googleAuthService.googleSignUp(context);
             }),
             SignInButton(Buttons.Apple,
                 text: 'Sign in With Apple', onPressed: () {}),
