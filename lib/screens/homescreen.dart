@@ -244,7 +244,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ProductOverviewPage()),
+                        builder: (context) => ProductOverviewPage(
+                            productImage:
+                                'https://media.newyorker.com/photos/5bc7551925cbcf2d7f5b7ea1/master/pass/Hercules-Herbs.jpg',
+                            productName: 'Green Herbs Preps')),
                   );
                 },
                 productImage:

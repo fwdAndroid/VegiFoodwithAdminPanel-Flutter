@@ -4,7 +4,9 @@ import 'package:vegifood/config/config.dart';
 enum SinginCharacter { fill, outline }
 
 class ProductOverviewPage extends StatefulWidget {
-  const ProductOverviewPage({Key? key}) : super(key: key);
+  final String productName;
+  final String productImage;
+  ProductOverviewPage({required this.productImage, required this.productName});
 
   @override
   _ProductOverviewPageState createState() => _ProductOverviewPageState();
@@ -48,14 +50,13 @@ class _ProductOverviewPageState extends State<ProductOverviewPage> {
                 child: Column(
                   children: [
                     ListTile(
-                      title: Text('Fresh Basil'),
+                      title: Text(widget.productName),
                       subtitle: Text("\$50"),
                     ),
                     Container(
                       height: 250,
                       padding: EdgeInsets.all(40),
-                      child: Image.network(
-                          'https://media.newyorker.com/photos/5bc7551925cbcf2d7f5b7ea1/master/pass/Hercules-Herbs.jpg'),
+                      child: Image.network(widget.productImage),
                     ),
                     Container(
                       width: double.infinity,
