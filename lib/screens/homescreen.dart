@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:vegifood/config/config.dart';
 import 'package:vegifood/dbfunctions/constructorclasses/singleproductherb.dart';
 import 'package:vegifood/screens/Product/productoverview.dart';
+import 'package:vegifood/screens/Search/search.dart';
 import 'package:vegifood/widget/drawer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,10 +30,16 @@ class _HomeScreenState extends State<HomeScreen> {
           CircleAvatar(
             radius: 12,
             backgroundColor: primaryColor,
-            child: Icon(
-              Icons.search,
-              size: 24,
-              color: textColor,
+            child: InkWell(
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (ctcx) => SearchPage()));
+              },
+              child: Icon(
+                Icons.search,
+                size: 24,
+                color: textColor,
+              ),
             ),
           ),
           Padding(
