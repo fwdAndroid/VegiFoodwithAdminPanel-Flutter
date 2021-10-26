@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:vegifood/config/config.dart';
+import 'package:vegifood/screens/Profiles/profile.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -12,8 +13,12 @@ class MyDrawer extends StatefulWidget {
 
 class _MyDrawerState extends State<MyDrawer> {
   //Functions
-  Widget listTile({required IconData icon, required String title}) {
+  Widget listTile(
+      {required IconData icon,
+      required String title,
+      required Function() onTap}) {
     return ListTile(
+      onTap: onTap,
       leading: Icon(icon, size: 24),
       title: Text(
         title,
@@ -75,14 +80,30 @@ class _MyDrawerState extends State<MyDrawer> {
                 ],
               ),
             ),
-            listTile(icon: Icons.home_outlined, title: "Home"),
-            listTile(icon: Icons.shop_outlined, title: "Review Cart"),
-            listTile(icon: Icons.person_outline, title: "My Profile"),
-            listTile(icon: Icons.notifications, title: "Notification"),
-            listTile(icon: Icons.star_outline, title: "Rating  & Review"),
-            listTile(icon: Icons.favorite_outline, title: "Wishlist"),
-            listTile(icon: Icons.copy_outlined, title: "Raise a complaint"),
-            listTile(icon: Icons.format_quote_outlined, title: "FAQs"),
+            listTile(icon: Icons.home_outlined, title: "Home", onTap: () {}),
+            listTile(
+                icon: Icons.shop_outlined, title: "Review Cart", onTap: () {}),
+            listTile(
+                icon: Icons.person_outline,
+                title: "My Profile",
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (ctx) => Profile()));
+                }),
+            listTile(
+                icon: Icons.notifications, title: "Notification", onTap: () {}),
+            listTile(
+                icon: Icons.star_outline,
+                title: "Rating  & Review",
+                onTap: () {}),
+            listTile(
+                icon: Icons.favorite_outline, title: "Wishlist", onTap: () {}),
+            listTile(
+                icon: Icons.copy_outlined,
+                title: "Raise a complaint",
+                onTap: () {}),
+            listTile(
+                icon: Icons.format_quote_outlined, title: "FAQs", onTap: () {}),
             Divider(
               height: 10,
               thickness: 1,
