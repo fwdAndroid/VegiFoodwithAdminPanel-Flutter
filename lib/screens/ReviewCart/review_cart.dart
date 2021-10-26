@@ -33,6 +33,7 @@ class _ReviewCartState extends State<ReviewCart> {
           ),
         ),
         appBar: AppBar(
+          backgroundColor: primaryColor,
           title: Text(
             'Review Cart',
             style: TextStyle(color: textColor, fontSize: 18),

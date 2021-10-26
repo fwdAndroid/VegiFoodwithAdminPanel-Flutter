@@ -33,6 +33,7 @@ class _ProfileState extends State<Profile> {
       backgroundColor: primaryColor,
       drawer: MyDrawer(),
       appBar: AppBar(
+        backgroundColor: primaryColor,
         elevation: 0,
         title: Text(
           'My Profile',
