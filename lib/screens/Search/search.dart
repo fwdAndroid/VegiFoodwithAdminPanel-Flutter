@@ -3,7 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vegifood/config/config.dart';
-import 'package:vegifood/screens/Search/searchitemwidget.dart';
+import 'package:vegifood/widget/singleitemwidget.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -52,11 +52,11 @@ class _SearchPageState extends State<SearchPage> {
           const SizedBox(
             height: 10,
           ),
-          SearchItem(),
-          SearchItem(),
-          SearchItem(),
-          SearchItem(),
-          SearchItem()
+          SingleItem(isBool: false),
+          SingleItem(isBool: false),
+          SingleItem(isBool: false),
+          SingleItem(isBool: false),
+          SingleItem(isBool: false)
         ],
       ),
     );

@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:vegifood/config/config.dart';
 import 'package:vegifood/screens/Profiles/profile.dart';
+import 'package:vegifood/screens/ReviewCart/review_cart.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -82,14 +83,26 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
             listTile(icon: Icons.home_outlined, title: "Home", onTap: () {}),
             listTile(
-                icon: Icons.shop_outlined, title: "Review Cart", onTap: () {}),
-            listTile(
-                icon: Icons.person_outline,
-                title: "My Profile",
+                icon: Icons.shop_outlined,
+                title: "Review Cart",
                 onTap: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (ctx) => Profile()));
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => ReviewCart(),
+                    ),
+                  );
                 }),
+            listTile(
+              icon: Icons.person_outline,
+              title: "My Profile",
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (ctx) => Profile(),
+                  ),
+                );
+              },
+            ),
             listTile(
                 icon: Icons.notifications, title: "Notification", onTap: () {}),
             listTile(
