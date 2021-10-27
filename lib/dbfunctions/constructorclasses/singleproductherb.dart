@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class SingleProductHerb extends StatelessWidget {
   final String productImage;
   final String productName;
+  final int productPrice;
   final Function() onTap;
   SingleProductHerb(
       {required this.productImage,
       required this.productName,
+      required this.productPrice,
       required this.onTap});
 
   @override
@@ -48,7 +50,7 @@ class SingleProductHerb extends StatelessWidget {
                               color: Colors.black, fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          '50\$/50 Gram',
+                          '$productPrice\$/50 Gram',
                           style: TextStyle(
                               color: Colors.grey, fontWeight: FontWeight.bold),
                         ),

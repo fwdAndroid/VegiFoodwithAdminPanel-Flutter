@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vegifood/config/config.dart';
 import 'package:vegifood/dbfunctions/constructorclasses/singleproductherb.dart';
+import 'package:vegifood/provider/product_provider.dart';
 import 'package:vegifood/screens/Product/productoverview.dart';
 import 'package:vegifood/screens/Search/search.dart';
 import 'package:vegifood/widget/drawer.dart';
@@ -15,8 +17,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late ProductProvider productProvider;
+  @override
+  void initState() {
+    // TODO: implement initState
+    ProductProvider productProvider = Provider.of(context, listen: false);
+    productProvider.fetchHerbsProductData();
+    productProvider.fetchFruitsProductData();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    productProvider = Provider.of(context);
+    // productProvider.fetchHerbsProductData();
     return Scaffold(
       drawer: MyDrawer(),
       appBar: AppBar(
@@ -164,61 +178,27 @@ class _HomeScreenState extends State<HomeScreen> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: [
-              SingleProductHerb(
-                onTap: () {
-                  print('Fawad');
-                },
-                productImage:
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_GNOtXoobR03rU2buQyAcerEWCMA5QxIoA&usqp=CAU',
-                productName: 'Fawad',
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              SingleProductHerb(
-                onTap: () {
-                  print('Fawad');
-                },
-                productImage:
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_GNOtXoobR03rU2buQyAcerEWCMA5QxIoA&usqp=CAU',
-                productName: 'Fawad',
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              SingleProductHerb(
-                onTap: () {
-                  print('Fawad');
-                },
-                productImage:
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_GNOtXoobR03rU2buQyAcerEWCMA5QxIoA&usqp=CAU',
-                productName: 'Fawad',
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              SingleProductHerb(
-                onTap: () {
-                  print('Fawad');
-                },
-                productImage:
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_GNOtXoobR03rU2buQyAcerEWCMA5QxIoA&usqp=CAU',
-                productName: 'Fawad',
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              SingleProductHerb(
-                onTap: () {
-                  print('Fawad');
-                },
-                productImage:
-                    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_GNOtXoobR03rU2buQyAcerEWCMA5QxIoA&usqp=CAU',
-                productName: 'Fawad',
-              ),
-            ],
+            children:
+                productProvider.getFetchFruitProductList.map((fruitsherbsdata) {
+              return SingleProductHerb(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) => ProductOverviewPage(
+                            productPrice: fruitsherbsdata.productPrice,
+                            productImage: fruitsherbsdata.productImage,
+                            productName: fruitsherbsdata.productName),
+                      ),
+                    );
+                  },
+                  productPrice: fruitsherbsdata.productPrice,
+                  productImage: fruitsherbsdata.productImage,
+                  productName: fruitsherbsdata.productName);
+            }).toList(),
           ),
+        ),
+        SizedBox(
+          width: 10,
         ),
       ],
     );
@@ -245,112 +225,31 @@ class _HomeScreenState extends State<HomeScreen> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: [
-              SingleProductHerb(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ProductOverviewPage(
-                            productImage:
-                                'https://media.newyorker.com/photos/5bc7551925cbcf2d7f5b7ea1/master/pass/Hercules-Herbs.jpg',
-                            productName: 'Green Herbs Preps')),
-                  );
-                },
-                productImage:
-                    'https://media.newyorker.com/photos/5bc7551925cbcf2d7f5b7ea1/master/pass/Hercules-Herbs.jpg',
-                productName: 'Fawad',
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              SingleProductHerb(
-                onTap: () {
-                  print('Fawad');
-                },
-                productImage:
-                    'https://media.newyorker.com/photos/5bc7551925cbcf2d7f5b7ea1/master/pass/Hercules-Herbs.jpg',
-                productName: 'Fawad',
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              SingleProductHerb(
-                onTap: () {
-                  print('Fawad');
-                },
-                productImage:
-                    'https://media.newyorker.com/photos/5bc7551925cbcf2d7f5b7ea1/master/pass/Hercules-Herbs.jpg',
-                productName: 'Fawad',
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              SingleProductHerb(
-                onTap: () {
-                  print('Fawad');
-                },
-                productImage:
-                    'https://media.newyorker.com/photos/5bc7551925cbcf2d7f5b7ea1/master/pass/Hercules-Herbs.jpg',
-                productName: 'Fawad',
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              SingleProductHerb(
-                onTap: () {
-                  print('Fawad');
-                },
-                productImage:
-                    'https://media.newyorker.com/photos/5bc7551925cbcf2d7f5b7ea1/master/pass/Hercules-Herbs.jpg',
-                productName: 'Fawad',
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              SingleProductHerb(
-                onTap: () {
-                  print('Fawad');
-                },
-                productImage:
-                    'https://media.newyorker.com/photos/5bc7551925cbcf2d7f5b7ea1/master/pass/Hercules-Herbs.jpg',
-                productName: 'Fawad',
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              SingleProductHerb(
-                onTap: () {
-                  print('Fawad');
-                },
-                productImage:
-                    'https://media.newyorker.com/photos/5bc7551925cbcf2d7f5b7ea1/master/pass/Hercules-Herbs.jpg',
-                productName: 'Fawad',
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              SingleProductHerb(
-                onTap: () {
-                  print('Fawad');
-                },
-                productImage:
-                    'https://media.newyorker.com/photos/5bc7551925cbcf2d7f5b7ea1/master/pass/Hercules-Herbs.jpg',
-                productName: 'Fawad',
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              SingleProductHerb(
-                onTap: () {
-                  print('Fawad');
-                },
-                productImage:
-                    'https://media.newyorker.com/photos/5bc7551925cbcf2d7f5b7ea1/master/pass/Hercules-Herbs.jpg',
-                productName: 'Fawad',
-              ),
-            ],
+            children: productProvider.getFetchHerbProductsList
+                .map((herbsproductData) {
+              return SingleProductHerb(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (ctx) => ProductOverviewPage(
+                            productPrice: herbsproductData.productPrice,
+                            productImage: herbsproductData.productImage,
+                            productName: herbsproductData.productName),
+                      ),
+                    );
+                  },
+                  productPrice: herbsproductData.productPrice,
+                  productImage: herbsproductData.productImage,
+                  productName: herbsproductData.productName);
+            }).toList(),
+
+            // children: [
+
+            // ],
           ),
+        ),
+        SizedBox(
+          width: 10,
         ),
       ],
     );

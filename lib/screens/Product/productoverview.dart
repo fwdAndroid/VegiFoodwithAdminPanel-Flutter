@@ -6,7 +6,11 @@ enum SinginCharacter { fill, outline }
 class ProductOverviewPage extends StatefulWidget {
   final String productName;
   final String productImage;
-  ProductOverviewPage({required this.productImage, required this.productName});
+  final int productPrice;
+  ProductOverviewPage(
+      {required this.productImage,
+      required this.productName,
+      required this.productPrice});
 
   @override
   _ProductOverviewPageState createState() => _ProductOverviewPageState();
@@ -91,7 +95,7 @@ class _ProductOverviewPageState extends State<ProductOverviewPage> {
                               ),
                             ],
                           ),
-                          Text("\$50"),
+                          Text("\$${widget.productPrice}"),
                           Container(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 30, vertical: 10),
