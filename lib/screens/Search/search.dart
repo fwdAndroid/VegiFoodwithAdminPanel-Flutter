@@ -6,6 +6,8 @@ import 'package:vegifood/config/config.dart';
 import 'package:vegifood/models/productmodel.dart';
 import 'package:vegifood/widget/singleitemwidget.dart';
 
+enum SinginCharacter { lowHigh, highToLow, alphabatically }
+
 class SearchPage extends StatefulWidget {
   final List<ProductModel> searchProduct;
   SearchPage({required this.searchProduct});
@@ -14,8 +16,19 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  String query = "";
+  SinginCharacter _character = SinginCharacter.alphabatically;
+  //Search Function
+  searchItem(String query) {
+    List<ProductModel> searchFood = widget.searchProduct.where((element) {
+      return element.productName.toLowerCase().contains(query);
+    }).toList();
+    return searchFood;
+  }
+
   @override
   Widget build(BuildContext context) {
+    List<ProductModel> _searchItem = searchItem(query);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
@@ -40,6 +53,11 @@ class _SearchPageState extends State<SearchPage> {
             height: 53,
             margin: const EdgeInsets.symmetric(horizontal: 20),
             child: TextField(
+              onChanged: (value) {
+                setState(() {
+                  query = value;
+                });
+              },
               decoration: InputDecoration(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -54,7 +72,7 @@ class _SearchPageState extends State<SearchPage> {
             height: 10,
           ),
           Column(
-              children: widget.searchProduct.map((e) {
+              children: _searchItem.map((e) {
             return SingleItem(
               isBool: false,
               productImage: e.productImage,

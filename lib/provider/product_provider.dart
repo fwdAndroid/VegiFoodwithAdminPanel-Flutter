@@ -5,11 +5,20 @@ import 'package:vegifood/models/productmodel.dart';
 class ProductProvider with ChangeNotifier {
   late ProductModel productModel;
 
+  ///Search ////.
+  List<ProductModel> search = [];
+  List<ProductModel> get getAllProductSearchResult {
+    return search;
+  }
+
+//Provider Funcationn
   productModels(QueryDocumentSnapshot snapshot) {
     productModel = ProductModel(
         productImage: snapshot.get('productImage'),
         productName: snapshot.get('productName'),
         productPrice: snapshot.get('productPrice'));
+
+    search.add(productModel);
   }
 
 ///////////////Herbs///////////
