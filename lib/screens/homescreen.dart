@@ -46,8 +46,13 @@ class _HomeScreenState extends State<HomeScreen> {
             backgroundColor: primaryColor,
             child: InkWell(
               onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (ctcx) => SearchPage()));
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (ctcx) => SearchPage(
+                      searchProduct: [],
+                    ),
+                  ),
+                );
               },
               child: Icon(
                 Icons.search,
@@ -157,6 +162,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+//Fruits
   Widget buildFruits(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,9 +174,20 @@ class _HomeScreenState extends State<HomeScreen> {
             // ignore: prefer_const_literals_to_create_immutables
             children: [
               Text('Fruits Seasonings'),
-              Text(
-                'View All',
-                style: TextStyle(color: Colors.grey),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (xtx) => SearchPage(
+                        searchProduct: productProvider.getFetchFruitProductList,
+                      ),
+                    ),
+                  );
+                },
+                child: Text(
+                  'View All',
+                  style: TextStyle(color: Colors.grey),
+                ),
               ),
             ],
           ),
@@ -204,6 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+//Herbs
   Widget buildHerbSingleProducts(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,9 +233,20 @@ class _HomeScreenState extends State<HomeScreen> {
             // ignore: prefer_const_literals_to_create_immutables
             children: [
               Text('Herbs Seasonings'),
-              Text(
-                'View All',
-                style: TextStyle(color: Colors.grey),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (xtx) => SearchPage(
+                        searchProduct: productProvider.getFetchHerbProductsList,
+                      ),
+                    ),
+                  );
+                },
+                child: Text(
+                  'View All',
+                  style: TextStyle(color: Colors.grey),
+                ),
               ),
             ],
           ),

@@ -46,10 +46,16 @@ class _ReviewCartState extends State<ReviewCart> {
             ),
             SingleItem(
               isBool: true,
+              productImage: "",
+              productName: "",
+              productPrice: 0,
             ),
-            SingleItem(isBool: true),
-            SingleItem(isBool: true),
-            SingleItem(isBool: true),
+            SingleItem(
+              isBool: true,
+              productImage: "",
+              productName: "",
+              productPrice: 0,
+            ),
             SizedBox(
               height: 10,
             ),

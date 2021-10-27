@@ -3,11 +3,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vegifood/config/config.dart';
+import 'package:vegifood/models/productmodel.dart';
 import 'package:vegifood/widget/singleitemwidget.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
-
+  final List<ProductModel> searchProduct;
+  SearchPage({required this.searchProduct});
   @override
   _SearchPageState createState() => _SearchPageState();
 }
@@ -52,11 +53,15 @@ class _SearchPageState extends State<SearchPage> {
           const SizedBox(
             height: 10,
           ),
-          SingleItem(isBool: false),
-          SingleItem(isBool: false),
-          SingleItem(isBool: false),
-          SingleItem(isBool: false),
-          SingleItem(isBool: false)
+          Column(
+              children: widget.searchProduct.map((e) {
+            return SingleItem(
+              isBool: false,
+              productImage: e.productImage,
+              productName: e.productName,
+              productPrice: e.productPrice,
+            );
+          }).toList()),
         ],
       ),
     );

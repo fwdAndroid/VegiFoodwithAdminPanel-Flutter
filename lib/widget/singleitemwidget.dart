@@ -7,7 +7,15 @@ import 'package:vegifood/config/config.dart';
 class SingleItem extends StatelessWidget {
   //Bool Variable is Always False
   bool isBool = false;
-  SingleItem({required this.isBool});
+  String productName;
+  String productImage;
+  int productPrice;
+  SingleItem({
+    required this.isBool,
+    required this.productImage,
+    required this.productName,
+    required this.productPrice,
+  });
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,8 +27,7 @@ class SingleItem extends StatelessWidget {
               Expanded(
                 child: Container(
                   height: 100,
-                  child: Image.network(
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRd_GNOtXoobR03rU2buQyAcerEWCMA5QxIoA&usqp=CAU"),
+                  child: Image.network(productImage),
                 ),
               ),
               Expanded(
@@ -35,12 +42,12 @@ class SingleItem extends StatelessWidget {
                       Column(
                         children: [
                           Text(
-                            'Product Name',
+                            productName,
                             style: TextStyle(
                                 color: textColor, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            '50\$/Gram',
+                            '$productPrice\$',
                             style: TextStyle(
                               color: Colors.grey,
                             ),
