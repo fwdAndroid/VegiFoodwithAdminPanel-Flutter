@@ -3,8 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:vegifood/models/productmodel.dart';
 
 class ProductProvider with ChangeNotifier {
-  List<ProductModel> herbsProductList = [];
   late ProductModel productModel;
+
+  productModels(QueryDocumentSnapshot snapshot) {
+    productModel = ProductModel(
+        productImage: snapshot.get('productImage'),
+        productName: snapshot.get('productName'),
+        productPrice: snapshot.get('productPrice'));
+  }
+
+///////////////Herbs///////////
+  List<ProductModel> herbsProductList = [];
 
   fetchHerbsProductData() async {
     List<ProductModel> newProductList = [];
@@ -13,11 +22,7 @@ class ProductProvider with ChangeNotifier {
 
     productValue.docs.forEach(
       (element) {
-        productModel = ProductModel(
-          productImage: element.get('productImage'),
-          productName: element.get('productName'),
-          productPrice: element.get('productPrice'),
-        );
+        productModels(element);
         newProductList.add(productModel);
       },
     );
@@ -25,9 +30,12 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
-//Fruiits Item List
-  List<ProductModel> fruitProductlist = [];
+  List<ProductModel> get getFetchHerbProductsList {
+    return herbsProductList;
+  }
 
+////////////////Fruiits Item List//////////////
+  List<ProductModel> fruitProductlist = [];
   fetchFruitsProductData() async {
     List<ProductModel> newProductFruitList = [];
     QuerySnapshot productValue =
@@ -35,11 +43,7 @@ class ProductProvider with ChangeNotifier {
 
     productValue.docs.forEach(
       (element) {
-        productModel = ProductModel(
-          productImage: element.get('productImage'),
-          productName: element.get('productName'),
-          productPrice: element.get('productPrice'),
-        );
+        productModels(element);
         newProductFruitList.add(productModel);
       },
     );
@@ -47,12 +51,6 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
-//For Herbs
-  List<ProductModel> get getFetchHerbProductsList {
-    return herbsProductList;
-  }
-
-//For Fruits
   List<ProductModel> get getFetchFruitProductList {
     return fruitProductlist;
   }
