@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:provider/provider.dart';
 import 'package:vegifood/dbfunctions/authfunctions/googleauth.dart';
-import 'package:vegifood/screens/homescreen.dart';
+import 'package:vegifood/provider/user_provider.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -13,8 +15,11 @@ class SignInPage extends StatefulWidget {
 GoogleAuthService googleAuthService = GoogleAuthService();
 
 class _SignInPageState extends State<SignInPage> {
+  UserProvider? userProvider;
+  late User user;
   @override
   Widget build(BuildContext context) {
+    userProvider = Provider.of(context);
     return Scaffold(
       body: Container(
         height: double.infinity,
@@ -48,6 +53,11 @@ class _SignInPageState extends State<SignInPage> {
             SignInButton(Buttons.Google, text: 'Sign in With Google',
                 onPressed: () async {
               googleAuthService.googleSignUp(context);
+              userProvider!.addUserData(
+                  currentUser: user,
+                  userName: user.displayName.toString(),
+                  userEmail: user.email.toString(),
+                  userImage: user.photoURL.toString());
             }),
             SignInButton(Buttons.Apple,
                 text: 'Sign in With Apple', onPressed: () {}),

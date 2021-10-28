@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vegifood/widget/counter.dart';
 
 class SingleProductHerb extends StatelessWidget {
   final String productImage;
@@ -85,33 +86,7 @@ class SingleProductHerb extends StatelessWidget {
                                     SizedBox(
                                       width: 3,
                                     ),
-                                    SizedBox(
-                                      height: 25,
-                                      width: 60,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.remove,
-                                            color: Color(0xffd1ad17),
-                                            size: 20,
-                                          ),
-                                          Text(
-                                            '1',
-                                            style: TextStyle(
-                                              color: Color(0xffd1ad17),
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          Icon(
-                                            Icons.add,
-                                            color: Color(0xffd1ad17),
-                                            size: 20,
-                                          )
-                                        ],
-                                      ),
-                                    ),
+                                    Counter(),
                                   ],
                                 ),
                               ),
