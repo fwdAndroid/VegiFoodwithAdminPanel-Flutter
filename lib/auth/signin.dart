@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
-import 'package:vegifood/dbfunctions/authfunctions/googleauth.dart';
 import 'package:vegifood/provider/user_provider.dart';
+import 'package:vegifood/screens/homescreen.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -12,14 +13,12 @@ class SignInPage extends StatefulWidget {
   _SignInPageState createState() => _SignInPageState();
 }
 
-GoogleAuthService googleAuthService = GoogleAuthService();
-
 class _SignInPageState extends State<SignInPage> {
   UserProvider? userProvider;
-  late User user;
   @override
   Widget build(BuildContext context) {
     userProvider = Provider.of(context);
+
     return Scaffold(
       body: Container(
         height: double.infinity,
@@ -52,12 +51,13 @@ class _SignInPageState extends State<SignInPage> {
             ),
             SignInButton(Buttons.Google, text: 'Sign in With Google',
                 onPressed: () async {
-              googleAuthService.googleSignUp(context);
-              userProvider!.addUserData(
-                  currentUser: user,
-                  userName: user.displayName.toString(),
-                  userEmail: user.email.toString(),
-                  userImage: user.photoURL.toString());
+              await googleSignUp(context).then(
+                (value) => Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => HomeScreen(),
+                  ),
+                ),
+              );
             }),
             SignInButton(Buttons.Apple,
                 text: 'Sign in With Apple', onPressed: () {}),
@@ -77,5 +77,36 @@ class _SignInPageState extends State<SignInPage> {
         ),
       ),
     );
+  }
+
+  googleSignUp(BuildContext context) async {
+    try {
+      final GoogleSignIn _googleSignIn = GoogleSignIn(
+        scopes: ['email'],
+      );
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      final User? user = (await _auth.signInWithCredential(credential)).user;
+
+      print("signed in " + user!.email.toString());
+      userProvider!.addUserData(
+        currentUser: user,
+        userEmail: user.email!,
+        userImage: user.photoURL!,
+        userName: user.displayName!,
+      );
+
+      return user;
+      // ignore: empty_catches
+    } catch (e) {}
   }
 }
