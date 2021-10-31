@@ -17,7 +17,8 @@ class ProductProvider with ChangeNotifier {
         productId: snapshot.get('productId'),
         productImage: snapshot.get('productImage'),
         productName: snapshot.get('productName'),
-        productPrice: snapshot.get('productPrice'));
+        productPrice: snapshot.get('productPrice'),
+        productQuantity: snapshot.get('productQuantity'));
 
     search.add(productModel);
   }

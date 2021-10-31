@@ -1,10 +1,10 @@
-class ReviewCart {
+class ReviewCartModel {
   String cartName;
   String cartImage;
   String cartId;
   int cartPrice;
   int cartQuantity;
-  ReviewCart(
+  ReviewCartModel(
       {required this.cartId,
       required this.cartName,
       required this.cartImage,
