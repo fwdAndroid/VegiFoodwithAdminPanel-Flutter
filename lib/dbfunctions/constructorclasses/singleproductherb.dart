@@ -5,9 +5,11 @@ class SingleProductHerb extends StatelessWidget {
   final String productImage;
   final String productName;
   final int productPrice;
+  final String productId;
   final Function() onTap;
   SingleProductHerb(
-      {required this.productImage,
+      {required this.productId,
+      required this.productImage,
       required this.productName,
       required this.productPrice,
       required this.onTap});
@@ -86,7 +88,12 @@ class SingleProductHerb extends StatelessWidget {
                                     SizedBox(
                                       width: 3,
                                     ),
-                                    Counter(),
+                                    Counter(
+                                      productName: productName,
+                                      productImage: productImage,
+                                      productPrice: productPrice,
+                                      productId: productId,
+                                    ),
                                   ],
                                 ),
                               ),

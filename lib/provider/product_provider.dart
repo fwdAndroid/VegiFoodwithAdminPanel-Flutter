@@ -14,6 +14,7 @@ class ProductProvider with ChangeNotifier {
 //Provider Funcationn
   productModels(QueryDocumentSnapshot snapshot) {
     productModel = ProductModel(
+        productId: snapshot.get('productId'),
         productImage: snapshot.get('productImage'),
         productName: snapshot.get('productName'),
         productPrice: snapshot.get('productPrice'));

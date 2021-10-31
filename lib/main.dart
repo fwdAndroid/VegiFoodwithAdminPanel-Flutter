@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:vegifood/auth/signin.dart';
 import 'package:vegifood/config/config.dart';
 import 'package:vegifood/provider/product_provider.dart';
+import 'package:vegifood/provider/review_cart_provider.dart';
 import 'package:vegifood/provider/user_provider.dart';
 
 Future<void> main() async {
@@ -25,6 +26,8 @@ class MyApp extends StatelessWidget {
             create: (context) => ProductProvider()),
         ChangeNotifierProvider<UserProvider>(
             create: (context) => UserProvider()),
+        ChangeNotifierProvider<ReviewCartProvider>(
+            create: (context) => ReviewCartProvider()),
       ],
       child: MaterialApp(
         theme: ThemeData(

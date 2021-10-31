@@ -198,19 +198,21 @@ class _HomeScreenState extends State<HomeScreen> {
             children:
                 productProvider.getFetchFruitProductList.map((fruitsherbsdata) {
               return SingleProductHerb(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (ctx) => ProductOverviewPage(
-                            productPrice: fruitsherbsdata.productPrice,
-                            productImage: fruitsherbsdata.productImage,
-                            productName: fruitsherbsdata.productName),
-                      ),
-                    );
-                  },
-                  productPrice: fruitsherbsdata.productPrice,
-                  productImage: fruitsherbsdata.productImage,
-                  productName: fruitsherbsdata.productName);
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => ProductOverviewPage(
+                          productPrice: fruitsherbsdata.productPrice,
+                          productImage: fruitsherbsdata.productImage,
+                          productName: fruitsherbsdata.productName),
+                    ),
+                  );
+                },
+                productId: fruitsherbsdata.productId,
+                productPrice: fruitsherbsdata.productPrice,
+                productImage: fruitsherbsdata.productImage,
+                productName: fruitsherbsdata.productName,
+              );
             }).toList(),
           ),
         ),
@@ -257,19 +259,21 @@ class _HomeScreenState extends State<HomeScreen> {
             children: productProvider.getFetchHerbProductsList
                 .map((herbsproductData) {
               return SingleProductHerb(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (ctx) => ProductOverviewPage(
-                            productPrice: herbsproductData.productPrice,
-                            productImage: herbsproductData.productImage,
-                            productName: herbsproductData.productName),
-                      ),
-                    );
-                  },
-                  productPrice: herbsproductData.productPrice,
-                  productImage: herbsproductData.productImage,
-                  productName: herbsproductData.productName);
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => ProductOverviewPage(
+                          productPrice: herbsproductData.productPrice,
+                          productImage: herbsproductData.productImage,
+                          productName: herbsproductData.productName),
+                    ),
+                  );
+                },
+                productId: herbsproductData.productId,
+                productPrice: herbsproductData.productPrice,
+                productImage: herbsproductData.productImage,
+                productName: herbsproductData.productName,
+              );
             }).toList(),
 
             // children: [
