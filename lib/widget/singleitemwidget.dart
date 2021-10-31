@@ -10,12 +10,17 @@ class SingleItem extends StatelessWidget {
   String productName;
   String productImage;
   int productPrice;
-  SingleItem({
-    required this.isBool,
-    required this.productImage,
-    required this.productName,
-    required this.productPrice,
-  });
+  String productId;
+  int productQuantity;
+  Function() onDelete;
+  SingleItem(
+      {required this.isBool,
+      required this.productImage,
+      required this.productName,
+      required this.productPrice,
+      required this.productId,
+      required this.productQuantity,
+      required this.onDelete});
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -120,7 +125,10 @@ class SingleItem extends StatelessWidget {
                         )
                       : Column(
                           children: [
-                            Icon(Icons.delete, size: 30, color: Colors.black54),
+                            InkWell(
+                                onTap: onDelete,
+                                child: Icon(Icons.delete,
+                                    size: 30, color: Colors.black54)),
                             SizedBox(height: 5),
                             Container(
                               height: 35,

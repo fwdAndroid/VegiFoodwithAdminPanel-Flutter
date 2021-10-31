@@ -56,6 +56,18 @@ class ReviewCartProvider with ChangeNotifier {
     return reviewCartList;
   }
 
+////////////////Delete Cart////////////////////////
+  deleteReviewCart(cartId) {
+    FirebaseFirestore.instance
+        .collection('ReviewCart')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("YourReviewCart")
+        .doc(cartId)
+        .delete();
+
+    notifyListeners();
+  }
+
   //To Get Specific data we use where condition
   //To Get All Data we use For Each
 

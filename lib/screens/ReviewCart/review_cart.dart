@@ -13,9 +13,32 @@ class ReviewCart extends StatefulWidget {
 }
 
 class _ReviewCartState extends State<ReviewCart> {
+  late ReviewCartProvider reviewCartProvider;
+  showAlertDialog(BuildContext context, var delete) {
+    Widget cancel = TextButton(
+      child: Text('Cancel'),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget deleteProduct = TextButton(
+      child: Text('Delete'),
+      onPressed: () {
+        reviewCartProvider.deleteReviewCart(delete);
+        Navigator.pop(context);
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text('AlertDialog'),
+      content: Text('Would You Like To Remove This Item From Cart'),
+      actions: [cancel, deleteProduct],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    ReviewCartProvider reviewCartProvider = Provider.of(context);
+    reviewCartProvider = Provider.of(context);
     reviewCartProvider.getReviewCartData();
     return Scaffold(
         bottomNavigationBar: ListTile(
@@ -63,6 +86,9 @@ class _ReviewCartState extends State<ReviewCart> {
                         productName: data.cartName,
                         productPrice: data.cartPrice,
                         productQuantity: data.cartQuantity,
+                        onDelete: () {
+                          showAlertDialog(context, data);
+                        },
                       ),
                     ],
                   );
