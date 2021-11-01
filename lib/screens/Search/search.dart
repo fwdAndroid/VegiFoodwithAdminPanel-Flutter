@@ -74,12 +74,14 @@ class _SearchPageState extends State<SearchPage> {
           Column(
               children: _searchItem.map((e) {
             return SingleItem(
-                isBool: false,
-                productId: e.productId,
-                productImage: e.productImage,
-                productName: e.productName,
-                productPrice: e.productPrice,
-                productQuantity: e.productQuantity);
+              isBool: false,
+              productId: e.productId,
+              productImage: e.productImage,
+              productName: e.productName,
+              productPrice: e.productPrice,
+              productQuantity: e.productQuantity,
+              onDelete: () {},
+            );
           }).toList()),
         ],
       ),
