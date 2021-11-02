@@ -22,7 +22,8 @@ class ReviewCartProvider with ChangeNotifier {
       "cartName": cartName,
       "cartImage": cartImage,
       "cartPrice": cartPrice,
-      "cartQuantity": cartQuantity
+      "cartQuantity": cartQuantity,
+      "isAdd": true
     });
   }
 
@@ -67,6 +68,30 @@ class ReviewCartProvider with ChangeNotifier {
 
     notifyListeners();
   }
+  /////////Update///////////
+  //Add User Data
+  void updateReviewCart({
+    required String cartId,
+    required String cartName,
+    required String cartImage,
+    required int cartPrice,
+    required int cartQuantity,
+  }) async {
+    await FirebaseFirestore.instance
+        .collection('ReviewCart')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("YourReviewCart")
+        .doc(cartId)
+        .update({
+      "cartId": cartId,
+      "cartName": cartName,
+      "cartImage": cartImage,
+      "cartPrice": cartPrice,
+      "cartQuantity": cartQuantity,
+      "isAdd": true
+    });
+  }
+
 
   //To Get Specific data we use where condition
   //To Get All Data we use For Each

@@ -111,14 +111,19 @@ class SingleItem extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
-                                  Icons.add,
+                                  Icons.remove,
                                   color: primaryColor,
                                   size: 20,
                                 ),
                                 Text(
-                                  'Add',
+                                  '1',
                                   style: TextStyle(color: Colors.grey),
-                                )
+                                ),
+                                Icon(
+                                  Icons.add,
+                                  color: primaryColor,
+                                  size: 20,
+                                ),
                               ],
                             ),
                           ),

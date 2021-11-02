@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vegifood/config/config.dart';
@@ -18,8 +20,28 @@ class Counter extends StatefulWidget {
 }
 
 class _CounterState extends State<Counter> {
-  int count = 1;
+  int count = 0;
   bool isTrue = false;
+
+  //Get Add and quantity
+  getAddandQuantity() {
+    FirebaseFirestore.instance
+        .collection('ReviewCart')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("YourReviewCart")
+        .doc(widget.productId)
+        .get()
+        .then((value) => {
+              if (value.exists)
+                {
+                  setState(() {
+                    count = value.get('cartQuantity');
+                    isTrue = value.get('isAdd');
+                  })
+                }
+            });
+  }
+
   @override
   Widget build(BuildContext context) {
     ReviewCartProvider reviewCartProvider = Provider.of(context);
@@ -36,12 +58,20 @@ class _CounterState extends State<Counter> {
                       setState(() {
                         count--;
                       });
+                      reviewCartProvider.addReviewCart(
+                        cartId: widget.productId,
+                        cartName: widget.productName,
+                        cartImage: widget.productImage,
+                        cartPrice: widget.productPrice,
+                        cartQuantity: count,
+                      );
                     }
 
                     if (count == 1) {
                       setState(() {
                         isTrue = false;
                       });
+                      reviewCartProvider.deleteReviewCart(widget.productId);
                     }
                   },
                   child: Icon(
@@ -62,6 +92,12 @@ class _CounterState extends State<Counter> {
                     setState(() {
                       count++;
                     });
+                    reviewCartProvider.updateReviewCart(
+                        cartId: widget.productId,
+                        cartName: widget.productName,
+                        cartImage: widget.productImage,
+                        cartPrice: widget.productPrice,
+                        cartQuantity: count);
                   },
                   child: Center(
                     child: Icon(
@@ -82,11 +118,12 @@ class _CounterState extends State<Counter> {
                       },
                     );
                     reviewCartProvider.addReviewCart(
-                        cartId: widget.productId,
-                        cartName: widget.productName,
-                        cartImage: widget.productImage,
-                        cartPrice: widget.productPrice,
-                        cartQuantity: count);
+                      cartId: widget.productId,
+                      cartName: widget.productName,
+                      cartImage: widget.productImage,
+                      cartPrice: widget.productPrice,
+                      cartQuantity: count,
+                    );
                   },
                   child: Text(
                     'ADD',
