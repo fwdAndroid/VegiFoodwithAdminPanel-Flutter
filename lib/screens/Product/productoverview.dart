@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vegifood/config/config.dart';
+import 'package:vegifood/provider/wish_list_provider.dart';
 
 enum SinginCharacter { fill, outline }
 
@@ -7,10 +9,13 @@ class ProductOverviewPage extends StatefulWidget {
   final String productName;
   final String productImage;
   final int productPrice;
-  ProductOverviewPage(
-      {required this.productImage,
-      required this.productName,
-      required this.productPrice});
+  final String productId;
+  ProductOverviewPage({
+    required this.productId,
+    required this.productImage,
+    required this.productName,
+    required this.productPrice,
+  });
 
   @override
   _ProductOverviewPageState createState() => _ProductOverviewPageState();
@@ -18,8 +23,10 @@ class ProductOverviewPage extends StatefulWidget {
 
 class _ProductOverviewPageState extends State<ProductOverviewPage> {
   SinginCharacter _character = SinginCharacter.fill;
+  bool wishlistBool = false;
   @override
   Widget build(BuildContext context) {
+    WishListProvider wishListProvider = Provider.of(context);
     return Scaffold(
         bottomNavigationBar: Row(
           children: [
@@ -27,9 +34,25 @@ class _ProductOverviewPageState extends State<ProductOverviewPage> {
                 backgroundColor: textColor,
                 color: Colors.white70,
                 title: "Add to WishList",
-                iconData: Icons.favorite_border_outlined,
+                iconData: wishlistBool
+                    ? Icons.favorite_border_outlined
+                    : Icons.favorite,
+                onTap: () {
+                  setState(() {
+                    wishlistBool = !wishlistBool;
+                  });
+                  if (wishlistBool == true) {
+                    wishListProvider.addWishlistData(
+                        wishlistId: widget.productId,
+                        wishlistName: widget.productName,
+                        wishlistImage: widget.productImage,
+                        wishlistPrice: widget.productPrice,
+                        wishlistQuantity: 3);
+                  }
+                },
                 iconColor: Colors.white),
             bottomNavigation(
+                onTap: () {},
                 backgroundColor: primaryColor,
                 color: Colors.white70,
                 title: "Go To Cart",
@@ -160,24 +183,28 @@ class _ProductOverviewPageState extends State<ProductOverviewPage> {
       Color? backgroundColor,
       Color? color,
       String title = "",
+      required Function() onTap,
       IconData? iconData}) {
     return Expanded(
-      child: Container(
-        padding: EdgeInsets.all(20),
-        color: backgroundColor,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              iconData,
-              size: 17,
-              color: iconColor,
-            ),
-            SizedBox(
-              width: 5,
-            ),
-            Text(title, style: TextStyle(color: color)),
-          ],
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding: EdgeInsets.all(20),
+          color: backgroundColor,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                iconData,
+                size: 17,
+                color: iconColor,
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(title, style: TextStyle(color: color)),
+            ],
+          ),
         ),
       ),
     );

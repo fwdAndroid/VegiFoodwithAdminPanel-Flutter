@@ -202,6 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (ctx) => ProductOverviewPage(
+                        productId: fruitsherbsdata.productId,
                           productPrice: fruitsherbsdata.productPrice,
                           productImage: fruitsherbsdata.productImage,
                           productName: fruitsherbsdata.productName),
@@ -263,6 +264,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (ctx) => ProductOverviewPage(
+                        productId: herbsproductData.productId,
                           productPrice: herbsproductData.productPrice,
                           productImage: herbsproductData.productImage,
                           productName: herbsproductData.productName),

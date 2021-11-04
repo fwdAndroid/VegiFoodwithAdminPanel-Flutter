@@ -54,7 +54,13 @@ class _CounterState extends State<Counter> {
               children: [
                 InkWell(
                   onTap: () {
-                    if (count > 1) {
+                   
+                    if (count == 1) {
+                      setState(() {
+                        isTrue = false;
+                      });
+                      reviewCartProvider.deleteReviewCart(widget.productId);
+                    } else if (count > 1) {
                       setState(() {
                         count--;
                       });
@@ -67,12 +73,6 @@ class _CounterState extends State<Counter> {
                       );
                     }
 
-                    if (count == 1) {
-                      setState(() {
-                        isTrue = false;
-                      });
-                      reviewCartProvider.deleteReviewCart(widget.productId);
-                    }
                   },
                   child: Icon(
                     Icons.remove,
