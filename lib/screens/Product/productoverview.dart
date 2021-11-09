@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vegifood/config/config.dart';
@@ -24,9 +26,28 @@ class ProductOverviewPage extends StatefulWidget {
 class _ProductOverviewPageState extends State<ProductOverviewPage> {
   SinginCharacter _character = SinginCharacter.fill;
   bool wishlistBool = false;
+
+  getWishlistBool() {
+    FirebaseFirestore.instance
+        .collection("WishList")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('YourWishList')
+        .doc(widget.productId)
+        .get()
+        .then((value) => {
+              if (this.mounted)
+                {
+                  setState(() {
+                    wishlistBool = value.get('wishList');
+                  })
+                }
+            });
+  }
+
   @override
   Widget build(BuildContext context) {
     WishListProvider wishListProvider = Provider.of(context);
+    getWishlistBool();
     return Scaffold(
         bottomNavigationBar: Row(
           children: [
@@ -34,7 +55,7 @@ class _ProductOverviewPageState extends State<ProductOverviewPage> {
                 backgroundColor: textColor,
                 color: Colors.white70,
                 title: "Add to WishList",
-                iconData: wishlistBool
+                iconData: wishlistBool == false
                     ? Icons.favorite_border_outlined
                     : Icons.favorite,
                 onTap: () {
@@ -48,6 +69,8 @@ class _ProductOverviewPageState extends State<ProductOverviewPage> {
                         wishlistImage: widget.productImage,
                         wishlistPrice: widget.productPrice,
                         wishlistQuantity: 3);
+                  } else {
+                    wishListProvider.deleteWishList(widget.productId);
                   }
                 },
                 iconColor: Colors.white),

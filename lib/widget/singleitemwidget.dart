@@ -7,6 +7,7 @@ import 'package:vegifood/config/config.dart';
 class SingleItem extends StatelessWidget {
   //Bool Variable is Always False
   bool isBool = false;
+  bool wishlist = false;
   String productName;
   String productImage;
   int productPrice;
@@ -14,7 +15,8 @@ class SingleItem extends StatelessWidget {
   int productQuantity;
   Function() onDelete;
   SingleItem(
-      {required this.isBool,
+      {required this.wishlist,
+      required this.isBool,
       required this.productImage,
       required this.productName,
       required this.productPrice,
@@ -135,7 +137,7 @@ class SingleItem extends StatelessWidget {
                                 child: Icon(Icons.delete,
                                     size: 30, color: Colors.black54)),
                             SizedBox(height: 5),
-                            Container(
+                          wishlist == false?  Container(
                               height: 35,
                               width: 70,
                               decoration: BoxDecoration(
@@ -160,7 +162,7 @@ class SingleItem extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                            )
+                            ) : Container()
                           ],
                         ),
                 ),

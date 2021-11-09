@@ -14,7 +14,7 @@ class ReviewCart extends StatefulWidget {
 
 class _ReviewCartState extends State<ReviewCart> {
   late ReviewCartProvider reviewCartProvider;
-  showAlertDialog(BuildContext context, var delete) {
+  showAlertDialog(BuildContext context, ReviewCartModel delete) {
     Widget cancel = TextButton(
       child: Text('Cancel'),
       onPressed: () {
@@ -24,7 +24,7 @@ class _ReviewCartState extends State<ReviewCart> {
     Widget deleteProduct = TextButton(
       child: Text('Delete'),
       onPressed: () {
-        reviewCartProvider.deleteReviewCart(delete);
+        reviewCartProvider.deleteReviewCart(delete.cartId);
         Navigator.pop(context);
       },
     );
@@ -80,6 +80,7 @@ class _ReviewCartState extends State<ReviewCart> {
                     children: [
                       SizedBox(height: 10),
                       SingleItem(
+                        wishlist: false,
                         isBool: true,
                         productId: data.cartId,
                         productImage: data.cartImage,

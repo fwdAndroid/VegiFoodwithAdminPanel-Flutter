@@ -74,6 +74,7 @@ class _SearchPageState extends State<SearchPage> {
           Column(
               children: _searchItem.map((e) {
             return SingleItem(
+              wishlist: false,
               isBool: false,
               productId: e.productId,
               productImage: e.productImage,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:vegifood/config/config.dart';
 import 'package:vegifood/screens/Profiles/profile.dart';
 import 'package:vegifood/screens/ReviewCart/review_cart.dart';
+import 'package:vegifood/screens/Wishlist/wishlistcart.dart';
 
 class MyDrawer extends StatefulWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -110,7 +111,12 @@ class _MyDrawerState extends State<MyDrawer> {
                 title: "Rating  & Review",
                 onTap: () {}),
             listTile(
-                icon: Icons.favorite_outline, title: "Wishlist", onTap: () {}),
+                icon: Icons.favorite_outline,
+                title: "Wishlist",
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (xtx) => WishListCart()));
+                }),
             listTile(
                 icon: Icons.copy_outlined,
                 title: "Raise a complaint",
