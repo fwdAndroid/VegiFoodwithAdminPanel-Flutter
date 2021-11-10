@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vegifood/config/config.dart';
 import 'package:vegifood/provider/wish_list_provider.dart';
+import 'package:vegifood/screens/ReviewCart/review_cart.dart';
+import 'package:vegifood/widget/counter.dart';
 
 enum SinginCharacter { fill, outline }
 
@@ -37,9 +39,12 @@ class _ProductOverviewPageState extends State<ProductOverviewPage> {
         .then((value) => {
               if (this.mounted)
                 {
-                  setState(() {
-                    wishlistBool = value.get('wishList');
-                  })
+                  if (value.exists)
+                    {
+                      setState(() {
+                        wishlistBool = value.get('wishList');
+                      })
+                    }
                 }
             });
   }
@@ -75,7 +80,10 @@ class _ProductOverviewPageState extends State<ProductOverviewPage> {
                 },
                 iconColor: Colors.white),
             bottomNavigation(
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (xtx) => ReviewCart()));
+                },
                 backgroundColor: primaryColor,
                 color: Colors.white70,
                 title: "Go To Cart",
@@ -142,27 +150,33 @@ class _ProductOverviewPageState extends State<ProductOverviewPage> {
                             ],
                           ),
                           Text("\$${widget.productPrice}"),
-                          Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 10),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.add,
-                                    size: 15,
-                                    color: primaryColor,
-                                  ),
-                                  Text(
-                                    'ADD',
-                                    style: TextStyle(color: primaryColor),
-                                  )
-                                ],
-                              ))
+                          Counter(
+                            productName: widget.productName,
+                            productImage: widget.productImage,
+                            productPrice: widget.productPrice,
+                            productId: widget.productId,
+                          ),
+                          // Container(
+                          //     padding: EdgeInsets.symmetric(
+                          //         horizontal: 30, vertical: 10),
+                          //     decoration: BoxDecoration(
+                          //       border: Border.all(color: Colors.grey),
+                          //       borderRadius: BorderRadius.circular(30),
+                          //     ),
+                          //     child: Row(
+                          //       mainAxisAlignment: MainAxisAlignment.center,
+                          //       children: [
+                          //         Icon(
+                          //           Icons.add,
+                          //           size: 15,
+                          //           color: primaryColor,
+                          //         ),
+                          //         Text(
+                          //           'ADD',
+                          //           style: TextStyle(color: primaryColor),
+                          //         )
+                          //       ],
+                          //     ))
                         ],
                       ),
                     )

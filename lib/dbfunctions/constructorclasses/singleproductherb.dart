@@ -62,40 +62,71 @@ class SingleProductHerb extends StatelessWidget {
                         Row(
                           children: [
                             Expanded(
-                              child: Container(
-                                padding: EdgeInsets.only(left: 6),
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.grey,
+                              child: InkWell(
+                                onTap: () {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) {
+                                        return Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            ListTile(
+                                              title: Text('50 Gram'),
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                            ListTile(
+                                              title: Text('500 Gram'),
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                            ListTile(
+                                              title: Text('1 Kg'),
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                              },
+                                            )
+                                          ],
+                                        );
+                                      });
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.only(left: 6),
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: Colors.grey,
+                                    ),
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        '50 Gram',
-                                        style: TextStyle(fontSize: 10),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          '50 Gram',
+                                          style: TextStyle(fontSize: 10),
+                                        ),
                                       ),
-                                    ),
-                                    Center(
-                                      child: Icon(
-                                        Icons.arrow_drop_down,
-                                        size: 20,
-                                        color: Colors.yellow,
+                                      Center(
+                                        child: Icon(
+                                          Icons.arrow_drop_down,
+                                          size: 20,
+                                          color: Colors.yellow,
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 3,
-                                    ),
-                                    Counter(
-                                      productName: productName,
-                                      productImage: productImage,
-                                      productPrice: productPrice,
-                                      productId: productId,
-                                    ),
-                                  ],
+                                      SizedBox(
+                                        width: 3,
+                                      ),
+                                      Counter(
+                                        productName: productName,
+                                        productImage: productImage,
+                                        productPrice: productPrice,
+                                        productId: productId,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

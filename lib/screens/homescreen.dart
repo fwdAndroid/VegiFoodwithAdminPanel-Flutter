@@ -6,6 +6,7 @@ import 'package:vegifood/config/config.dart';
 import 'package:vegifood/dbfunctions/constructorclasses/singleproductherb.dart';
 import 'package:vegifood/provider/product_provider.dart';
 import 'package:vegifood/screens/Product/productoverview.dart';
+import 'package:vegifood/screens/ReviewCart/review_cart.dart';
 import 'package:vegifood/screens/Search/search.dart';
 import 'package:vegifood/widget/drawer.dart';
 
@@ -63,14 +64,20 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 5),
-            child: CircleAvatar(
-              child: Icon(
-                Icons.shop,
-                size: 24,
-                color: textColor,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (xtx) => ReviewCart()));
+              },
+              child: CircleAvatar(
+                child: Icon(
+                  Icons.shop,
+                  size: 24,
+                  color: textColor,
+                ),
+                radius: 12,
+                backgroundColor: primaryColor,
               ),
-              radius: 12,
-              backgroundColor: primaryColor,
             ),
           ),
         ],
@@ -202,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (ctx) => ProductOverviewPage(
-                        productId: fruitsherbsdata.productId,
+                          productId: fruitsherbsdata.productId,
                           productPrice: fruitsherbsdata.productPrice,
                           productImage: fruitsherbsdata.productImage,
                           productName: fruitsherbsdata.productName),
@@ -264,7 +271,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (ctx) => ProductOverviewPage(
-                        productId: herbsproductData.productId,
+                          productId: herbsproductData.productId,
                           productPrice: herbsproductData.productPrice,
                           productImage: herbsproductData.productImage,
                           productName: herbsproductData.productName),

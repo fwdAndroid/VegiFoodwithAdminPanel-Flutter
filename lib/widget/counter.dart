@@ -20,7 +20,7 @@ class Counter extends StatefulWidget {
 }
 
 class _CounterState extends State<Counter> {
-  int count = 0;
+  int count = 1;
   bool isTrue = false;
 
   //Get Add and quantity
@@ -54,7 +54,6 @@ class _CounterState extends State<Counter> {
               children: [
                 InkWell(
                   onTap: () {
-                   
                     if (count == 1) {
                       setState(() {
                         isTrue = false;
@@ -72,7 +71,6 @@ class _CounterState extends State<Counter> {
                         cartQuantity: count,
                       );
                     }
-
                   },
                   child: Icon(
                     Icons.remove,
