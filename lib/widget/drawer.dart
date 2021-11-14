@@ -130,8 +130,8 @@ class _MyDrawerState extends State<MyDrawer> {
                 icon: Icons.favorite_outline,
                 title: "Wishlist",
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (xtx) => WishListCart()));
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (xtx) => WishLsit()));
                 }),
             listTile(
                 icon: Icons.copy_outlined,

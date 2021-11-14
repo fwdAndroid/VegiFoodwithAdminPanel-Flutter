@@ -5,73 +5,84 @@ import 'package:vegifood/models/productmodel.dart';
 import 'package:vegifood/provider/wish_list_provider.dart';
 import 'package:vegifood/widget/singleitemwidget.dart';
 
-class WishListCart extends StatefulWidget {
-  const WishListCart({Key? key}) : super(key: key);
-
+class WishLsit extends StatefulWidget {
   @override
-  _WishListCartState createState() => _WishListCartState();
+  _WishLsitState createState() => _WishLsitState();
 }
 
-class _WishListCartState extends State<WishListCart> {
+class _WishLsitState extends State<WishLsit> {
   late WishListProvider wishListProvider;
+  showAlertDialog(BuildContext context, ProductModel delete) {
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: Text("No"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: Text("Yes"),
+      onPressed: () {
+        wishListProvider.deleteWishtList(delete.productId);
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("WishList Product"),
+      content: Text("Are you devete on wishList Product?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     wishListProvider = Provider.of(context);
-    wishListProvider.getWishListData();
-
-    showAlertDialog(BuildContext context, ProductModel delete) {
-      Widget cancel = TextButton(
-        child: Text('Cancel'),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      );
-      Widget deleteProduct = TextButton(
-        child: Text('Delete'),
-        onPressed: () {
-          wishListProvider.deleteWishList(delete.productId);
-          Navigator.pop(context);
-        },
-      );
-
-      AlertDialog alert = AlertDialog(
-        title: Text('AlertDialog'),
-        content: Text('Would You Like To Remove This Item From WishList'),
-        actions: [cancel, deleteProduct],
-      );
-    }
-
+    wishListProvider.getWishtListData();
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: primaryColor,
-          title: Text(
-            'WishList',
-            style: TextStyle(color: textColor, fontSize: 18),
-          ),
+      appBar: AppBar(
+        title: Text(
+          "WishList",
+          style: TextStyle(color: textColor, fontSize: 18),
         ),
-        body: ListView.builder(
-          itemCount: wishListProvider.getWishList.length,
-          itemBuilder: (context, index) {
-            ProductModel data = wishListProvider.getWishListData()[index];
-            return Column(
-              children: [
-                SizedBox(height: 10),
-                SingleItem(
-                  wishlist: true,
-                  isBool: true,
-                  productId: data.productId,
-                  productImage: data.productImage,
-                  productName: data.productName,
-                  productPrice: data.productPrice,
-                  productQuantity: data.productQuantity,
-                  onDelete: () {
-                    showAlertDialog(context, data);
-                  },
-                ),
-              ],
-            );
-          },
-        ));
+      ),
+      body: ListView.builder(
+        itemCount: wishListProvider.getWishList.length,
+        itemBuilder: (context, index) {
+          ProductModel data = wishListProvider.getWishList[index];
+          return Column(
+            children: [
+              SizedBox(
+                height: 10,
+              ),
+              SingleItem(
+                wishList: true,
+                isBool: true,
+                productImage: data.productImage,
+                productName: data.productName,
+                productPrice: data.productPrice,
+                productId: data.productId,
+                productQuantity: data.productQuantity,
+                onDelete: () {
+                  showAlertDialog(context, data);
+                },
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 }

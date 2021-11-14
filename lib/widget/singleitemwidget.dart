@@ -11,22 +11,23 @@ import 'package:fluttertoast/fluttertoast.dart';
 class SingleItem extends StatefulWidget {
   //Bool Variable is Always False
   bool isBool = false;
-  bool wishlist = false;
+  bool wishList = false;
   String productName;
   String productImage;
   int productPrice;
   String productId;
   int productQuantity;
   Function() onDelete;
-  SingleItem(
-      {required this.wishlist,
-      required this.isBool,
-      required this.productImage,
-      required this.productName,
-      required this.productPrice,
-      required this.productId,
-      required this.productQuantity,
-      required this.onDelete});
+  SingleItem({
+    required this.isBool,
+    required this.productImage,
+    required this.productName,
+    required this.productPrice,
+    required this.productId,
+    required this.productQuantity,
+    required this.wishList,
+    required this.onDelete,
+  });
 
   @override
   State<SingleItem> createState() => _SingleItemState();
@@ -169,7 +170,7 @@ class _SingleItemState extends State<SingleItem> {
                                   child: Icon(Icons.delete,
                                       size: 30, color: Colors.black54)),
                               SizedBox(height: 5),
-                              widget.wishlist == false
+                              widget.wishList == false
                                   ? Container(
                                       height: 35,
                                       width: 70,
@@ -202,7 +203,7 @@ class _SingleItemState extends State<SingleItem> {
                                                     count--;
                                                   });
                                                   reviewCartProvider
-                                                      .updateReviewCart(
+                                                      .updateReviewCartData(
                                                           cartId:
                                                               widget.productId,
                                                           cartName: widget
@@ -227,12 +228,12 @@ class _SingleItemState extends State<SingleItem> {
                                             ),
                                             InkWell(
                                               onTap: () {
-                                                if (count < 15) {
+                                                if (count < 5) {
                                                   setState(() {
                                                     count++;
                                                   });
                                                   reviewCartProvider
-                                                      .updateReviewCart(
+                                                      .updateReviewCartData(
                                                           cartId:
                                                               widget.productId,
                                                           cartName: widget

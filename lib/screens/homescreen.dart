@@ -24,8 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     ProductProvider productProvider = Provider.of(context, listen: false);
-    productProvider.fetchHerbsProductData();
-    productProvider.fetchFruitsProductData();
+    productProvider.fatchHerbsProductData();
+    productProvider.fatchFreshProductData();
     super.initState();
   }
 
@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.of(context).push(
                   MaterialPageRoute(
                     builder: (ctcx) => SearchPage(
-                      searchProduct: productProvider.getAllProductSearchResult,
+                      searchProduct: productProvider.gerAllProductSearch,
                     ),
                   ),
                 );
@@ -191,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (xtx) => SearchPage(
-                        searchProduct: productProvider.getFetchFruitProductList,
+                        searchProduct: productProvider.getFreshProductDataList,
                       ),
                     ),
                   );
@@ -208,12 +208,12 @@ class _HomeScreenState extends State<HomeScreen> {
           scrollDirection: Axis.horizontal,
           child: Row(
             children:
-                productProvider.getFetchFruitProductList.map((fruitsherbsdata) {
+                productProvider.getFreshProductDataList.map((fruitsherbsdata) {
               return SingleProductHerb(
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (ctx) => ProductOverviewPage(
+                      builder: (ctx) => ProductOverview(
                           productId: fruitsherbsdata.productId,
                           productPrice: fruitsherbsdata.productPrice,
                           productImage: fruitsherbsdata.productImage,
@@ -253,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (xtx) => SearchPage(
-                        searchProduct: productProvider.getFetchHerbProductsList,
+                        searchProduct: productProvider.getHerbsProductDataList,
                       ),
                     ),
                   );
@@ -269,13 +269,13 @@ class _HomeScreenState extends State<HomeScreen> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: productProvider.getFetchHerbProductsList
-                .map((herbsproductData) {
+            children:
+                productProvider.getHerbsProductDataList.map((herbsproductData) {
               return SingleProductHerb(
                 onTap: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (ctx) => ProductOverviewPage(
+                      builder: (ctx) => ProductOverview(
                           productId: herbsproductData.productId,
                           productPrice: herbsproductData.productPrice,
                           productImage: herbsproductData.productImage,

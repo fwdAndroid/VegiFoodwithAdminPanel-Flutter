@@ -68,11 +68,10 @@ class _ProfileState extends State<Profile> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Container(
-                          width: 250,
+                          width: 270,
                           height: 80,
-                          padding: const EdgeInsets.only(left: 20),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -105,7 +104,7 @@ class _ProfileState extends State<Profile> {
                               )
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                     listTile(Icons.shop_outlined, 'My Orders'),

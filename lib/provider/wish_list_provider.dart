@@ -4,63 +4,65 @@ import 'package:flutter/cupertino.dart';
 import 'package:vegifood/models/productmodel.dart';
 
 class WishListProvider with ChangeNotifier {
-  //Add User Data
-  void addWishlistData({
-    required String wishlistId,
-    required String wishlistName,
-    required String wishlistImage,
-    required int wishlistPrice,
-    required int wishlistQuantity,
-  }) async {
-    await FirebaseFirestore.instance
-        .collection('Wishlist')
+  addWishListData({
+    required String wishListId,
+    required String wishListName,
+    required var wishListPrice,
+    required String wishListImage,
+    required int wishListQuantity,
+  }) {
+    FirebaseFirestore.instance
+        .collection("WishList")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("YourWishList")
-        .doc(wishlistId)
+        .doc(wishListId)
         .set({
-      "wishlistId": wishlistId,
-      "wishlistName": wishlistName,
-      "wishlistImage": wishlistImage,
-      "wishlistPrice": wishlistPrice,
-      "wishlistQuantity": wishlistQuantity,
-      "wishlist": true
+      "wishListId": wishListId,
+      "wishListName": wishListName,
+      "wishListImage": wishListImage,
+      "wishListPrice": wishListPrice,
+      "wishListQuantity": wishListQuantity,
+      "wishList": true,
     });
   }
 
-  /////Get...///
-  List<ProductModel> newWishListProduct = [];
-  getWishListData() async {
+///// Get WishList Data ///////
+  List<ProductModel> wishList = [];
+
+  getWishtListData() async {
     List<ProductModel> newList = [];
     QuerySnapshot value = await FirebaseFirestore.instance
-        .collection('Wishlist')
+        .collection("WishList")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("YourWishList")
         .get();
-
-    value.docs.forEach((element) {
-      ProductModel productModel = ProductModel(
-          productId: element.get('wishlistId'),
-          productImage: element.get('wishlistImage'),
-          productName: element.get('wishlistName'),
-          productPrice: element.get('wishlistPrice'),
-          productQuantity: element.get('wishlistQuantity'));
-      newList.add(productModel);
-    });
-    newWishListProduct = newList;
+    value.docs.forEach(
+      (element) {
+        ProductModel productModel = ProductModel(
+          productId: element.get("wishListId"),
+          productImage: element.get("wishListImage"),
+          productName: element.get("wishListName"),
+          productPrice: element.get("wishListPrice"),
+          productQuantity: element.get("wishListQuantity"),
+        );
+        newList.add(productModel);
+      },
+    );
+    wishList = newList;
     notifyListeners();
   }
 
   List<ProductModel> get getWishList {
-    return newWishListProduct;
+    return wishList;
   }
 
-  ///Delete//
-  deleteWishList(delete) {
+////////// Delete WishList /////
+  deleteWishtList(wishListId) {
     FirebaseFirestore.instance
-        .collection('Wishlist')
+        .collection("WishList")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("YourWishList")
-        .doc()
+        .doc(wishListId)
         .delete();
   }
 }

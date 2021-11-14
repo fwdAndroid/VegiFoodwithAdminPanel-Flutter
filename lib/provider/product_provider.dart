@@ -5,64 +5,90 @@ import 'package:vegifood/models/productmodel.dart';
 class ProductProvider with ChangeNotifier {
   late ProductModel productModel;
 
-  ///Search ////.
   List<ProductModel> search = [];
-  List<ProductModel> get getAllProductSearchResult {
-    return search;
-  }
-
-//Provider Funcationn
-  productModels(QueryDocumentSnapshot snapshot) {
+  productModels(QueryDocumentSnapshot element) {
     productModel = ProductModel(
-        productId: snapshot.get('productId'),
-        productImage: snapshot.get('productImage'),
-        productName: snapshot.get('productName'),
-        productPrice: snapshot.get('productPrice'),
-        productQuantity: snapshot.get('productQuantity'));
-
+      productImage: element.get("productImage"),
+      productName: element.get("productName"),
+      productPrice: element.get("productPrice"),
+      productId: element.get("productId"),
+      productQuantity: element.get("productQuantity"),
+    );
     search.add(productModel);
   }
 
-///////////////Herbs///////////
+  /////////////// herbsProduct ///////////////////////////////
   List<ProductModel> herbsProductList = [];
 
-  fetchHerbsProductData() async {
-    List<ProductModel> newProductList = [];
-    QuerySnapshot productValue =
-        await FirebaseFirestore.instance.collection('HerbsProduct').get();
+  fatchHerbsProductData() async {
+    List<ProductModel> newList = [];
 
-    productValue.docs.forEach(
+    QuerySnapshot value =
+        await FirebaseFirestore.instance.collection("HerbsProduct").get();
+
+    value.docs.forEach(
       (element) {
         productModels(element);
-        newProductList.add(productModel);
+
+        newList.add(productModel);
       },
     );
-    herbsProductList = newProductList;
+    herbsProductList = newList;
     notifyListeners();
   }
 
-  List<ProductModel> get getFetchHerbProductsList {
+  List<ProductModel> get getHerbsProductDataList {
     return herbsProductList;
   }
 
-////////////////Fruiits Item List//////////////
-  List<ProductModel> fruitProductlist = [];
-  fetchFruitsProductData() async {
-    List<ProductModel> newProductFruitList = [];
-    QuerySnapshot productValue =
-        await FirebaseFirestore.instance.collection('FruitsProduct').get();
+//////////////// Fresh Product ///////////////////////////////////////
+  List<ProductModel> freshProductList = [];
 
-    productValue.docs.forEach(
+  fatchFreshProductData() async {
+    List<ProductModel> newList = [];
+
+    QuerySnapshot value =
+        await FirebaseFirestore.instance.collection("FreshProduct").get();
+
+    value.docs.forEach(
       (element) {
         productModels(element);
-        newProductFruitList.add(productModel);
+        newList.add(productModel);
       },
     );
-    fruitProductlist = newProductFruitList;
+    freshProductList = newList;
     notifyListeners();
   }
 
-  List<ProductModel> get getFetchFruitProductList {
-    return fruitProductlist;
+  List<ProductModel> get getFreshProductDataList {
+    return freshProductList;
+  }
+
+//////////////// Root Product ///////////////////////////////////////
+  List<ProductModel> rootProductList = [];
+
+  fatchRootProductData() async {
+    List<ProductModel> newList = [];
+
+    QuerySnapshot value =
+        await FirebaseFirestore.instance.collection("RootProduct").get();
+
+    value.docs.forEach(
+      (element) {
+        productModels(element);
+        newList.add(productModel);
+      },
+    );
+    rootProductList = newList;
+    notifyListeners();
+  }
+
+  List<ProductModel> get getRootProductDataList {
+    return rootProductList;
+  }
+
+  /////////////////// Search Return ////////////
+  List<ProductModel> get gerAllProductSearch {
+    return search;
   }
 }

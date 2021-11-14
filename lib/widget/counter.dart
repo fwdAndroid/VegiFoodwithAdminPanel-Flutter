@@ -1,53 +1,66 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 import 'package:vegifood/config/config.dart';
 import 'package:vegifood/provider/review_cart_provider.dart';
 
 class Counter extends StatefulWidget {
-  String productName, productImage, productId;
+  String productName;
+  String productImage;
+  String productId;
   int productPrice;
-  Counter(
-      {required this.productId,
-      required this.productName,
-      required this.productImage,
-      required this.productPrice});
+
+  Counter({
+    required this.productName,
+    required this.productId,
+    required this.productImage,
+    required this.productPrice,
+  });
   @override
-  State<Counter> createState() => _CounterState();
+  _CounterState createState() => _CounterState();
 }
 
 class _CounterState extends State<Counter> {
   int count = 1;
   bool isTrue = false;
 
-  //Get Add and quantity
-  getAddandQuantity() {
+  getAddAndQuantity() {
     FirebaseFirestore.instance
-        .collection('ReviewCart')
+        .collection("ReviewCart")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("YourReviewCart")
         .doc(widget.productId)
         .get()
-        .then((value) => {
-              if (value.exists)
-                {
-                  setState(() {
-                    count = value.get('cartQuantity');
-                    isTrue = value.get('isAdd');
-                  })
-                }
-            });
+        .then(
+          (value) => {
+            if (this.mounted)
+              {
+                if (value.exists)
+                  {
+                    setState(() {
+                      count = value.get("cartQuantity");
+                      isTrue = value.get("isAdd");
+                    })
+                  }
+              }
+          },
+        );
   }
 
   @override
   Widget build(BuildContext context) {
+    getAddAndQuantity();
+
     ReviewCartProvider reviewCartProvider = Provider.of(context);
-    return SizedBox(
+    return Container(
       height: 25,
-      width: 60,
+      width: 50,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey),
+        borderRadius: BorderRadius.circular(8),
+      ),
       child: isTrue == true
           ? Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -58,15 +71,15 @@ class _CounterState extends State<Counter> {
                       setState(() {
                         isTrue = false;
                       });
-                      reviewCartProvider.deleteReviewCart(widget.productId);
+                      reviewCartProvider.reviewCartDataDelete(widget.productId);
                     } else if (count > 1) {
                       setState(() {
                         count--;
                       });
-                      reviewCartProvider.addReviewCart(
+                      reviewCartProvider.updateReviewCartData(
                         cartId: widget.productId,
-                        cartName: widget.productName,
                         cartImage: widget.productImage,
+                        cartName: widget.productName,
                         cartPrice: widget.productPrice,
                         cartQuantity: count,
                       );
@@ -74,14 +87,14 @@ class _CounterState extends State<Counter> {
                   },
                   child: Icon(
                     Icons.remove,
-                    color: Color(0xffd1ad17),
-                    size: 20,
+                    size: 15,
+                    color: Color(0xffd0b84c),
                   ),
                 ),
                 Text(
-                  '$count',
+                  "$count",
                   style: TextStyle(
-                    color: Color(0xffd1ad17),
+                    color: Color(0xffd0b84c),
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -90,43 +103,41 @@ class _CounterState extends State<Counter> {
                     setState(() {
                       count++;
                     });
-                    reviewCartProvider.updateReviewCart(
-                        cartId: widget.productId,
-                        cartName: widget.productName,
-                        cartImage: widget.productImage,
-                        cartPrice: widget.productPrice,
-                        cartQuantity: count);
-                  },
-                  child: Center(
-                    child: Icon(
-                      Icons.add,
-                      color: Color(0xffd1ad17),
-                      size: 20,
-                    ),
-                  ),
-                )
-              ],
-            )
-          : Center(
-              child: InkWell(
-                  onTap: () {
-                    setState(
-                      () {
-                        isTrue = true;
-                      },
-                    );
-                    reviewCartProvider.addReviewCart(
+                    reviewCartProvider.updateReviewCartData(
                       cartId: widget.productId,
-                      cartName: widget.productName,
                       cartImage: widget.productImage,
+                      cartName: widget.productName,
                       cartPrice: widget.productPrice,
                       cartQuantity: count,
                     );
                   },
-                  child: Text(
-                    'ADD',
-                    style: TextStyle(color: primaryColor),
-                  )),
+                  child: Icon(
+                    Icons.add,
+                    size: 15,
+                    color: Color(0xffd0b84c),
+                  ),
+                ),
+              ],
+            )
+          : Center(
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    isTrue = true;
+                  });
+                  reviewCartProvider.addReviewCartData(
+                    cartId: widget.productId,
+                    cartImage: widget.productImage,
+                    cartName: widget.productName,
+                    cartPrice: widget.productPrice,
+                    cartQuantity: count,
+                  );
+                },
+                child: Text(
+                  "ADD",
+                  style: TextStyle(color: primaryColor),
+                ),
+              ),
             ),
     );
   }

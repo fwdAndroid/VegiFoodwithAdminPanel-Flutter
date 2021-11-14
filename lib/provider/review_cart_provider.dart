@@ -1,99 +1,104 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:vegifood/models/review_cart_modal.dart';
 
 class ReviewCartProvider with ChangeNotifier {
-  //Add User Data
-  void addReviewCart({
+  void addReviewCartData({
+    required String cartId,
+    required String cartName,
+    required String cartImage,
+    required int cartPrice,
+    required int cartQuantity,
+    var cartUnit,
+  }) async {
+    FirebaseFirestore.instance
+        .collection("ReviewCart")
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection("YourReviewCart")
+        .doc(cartId)
+        .set(
+      {
+        "cartId": cartId,
+        "cartName": cartName,
+        "cartImage": cartImage,
+        "cartPrice": cartPrice,
+        "cartQuantity": cartQuantity,
+        "cartUnit": cartUnit,
+        "isAdd": true,
+      },
+    );
+  }
+
+  void updateReviewCartData({
     required String cartId,
     required String cartName,
     required String cartImage,
     required int cartPrice,
     required int cartQuantity,
   }) async {
-    await FirebaseFirestore.instance
-        .collection('ReviewCart')
+    FirebaseFirestore.instance
+        .collection("ReviewCart")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("YourReviewCart")
         .doc(cartId)
-        .set({
-      "cartId": cartId,
-      "cartName": cartName,
-      "cartImage": cartImage,
-      "cartPrice": cartPrice,
-      "cartQuantity": cartQuantity,
-      "isAdd": true
-    });
+        .update(
+      {
+        "cartId": cartId,
+        "cartName": cartName,
+        "cartImage": cartImage,
+        "cartPrice": cartPrice,
+        "cartQuantity": cartQuantity,
+        "isAdd": true,
+      },
+    );
   }
 
-  //Get Review Cart Data
-  List<ReviewCartModel> reviewCartList = [];
+  List<ReviewCartModel> reviewCartDataList = [];
   void getReviewCartData() async {
-    //TO Store all data in all above list
-    List<ReviewCartModel> newReviewCartlist = [];
-    QuerySnapshot reviewQuerySnapshot = await FirebaseFirestore.instance
-        .collection('ReviewCart')
+    List<ReviewCartModel> newList = [];
+
+    QuerySnapshot reviewCartValue = await FirebaseFirestore.instance
+        .collection("ReviewCart")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("YourReviewCart")
         .get();
-
-    reviewQuerySnapshot.docs.forEach((element) {
-      ReviewCartModel cartModel = ReviewCartModel(
-        cartId: element.get('cartId'),
-        cartName: element.get('cartName'),
-        cartImage: element.get('cartImage'),
-        cartPrice: element.get('cartPrice'),
-        cartQuantity: element.get('cartQuantity'),
+    reviewCartValue.docs.forEach((element) {
+      ReviewCartModel reviewCartModel = ReviewCartModel(
+        cartId: element.get("cartId"),
+        cartImage: element.get("cartImage"),
+        cartName: element.get("cartName"),
+        cartPrice: element.get("cartPrice"),
+        cartQuantity: element.get("cartQuantity"),
       );
-      newReviewCartlist.add(cartModel);
+      newList.add(reviewCartModel);
     });
-    newReviewCartlist = reviewCartList;
+    reviewCartDataList = newList;
     notifyListeners();
   }
 
-  //Get Data From Provider
   List<ReviewCartModel> get getReviewCartDataList {
-    return reviewCartList;
+    return reviewCartDataList;
   }
 
-////////////////Delete Cart////////////////////////
-  deleteReviewCart(cartId) {
+//// TotalPrice  ///
+
+  getTotalPrice() {
+    double total = 0.0;
+    reviewCartDataList.forEach((element) {
+      total += element.cartPrice * element.cartQuantity;
+    });
+    return total;
+  }
+
+////////////// ReviCartDeleteFunction ////////////
+  reviewCartDataDelete(cartId) {
     FirebaseFirestore.instance
-        .collection('ReviewCart')
+        .collection("ReviewCart")
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection("YourReviewCart")
         .doc(cartId)
         .delete();
-
     notifyListeners();
   }
-  /////////Update///////////
-  //Add User Data
-  void updateReviewCart({
-    required String cartId,
-    required String cartName,
-    required String cartImage,
-    required int cartPrice,
-    required int cartQuantity,
-  }) async {
-    await FirebaseFirestore.instance
-        .collection('ReviewCart')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection("YourReviewCart")
-        .doc(cartId)
-        .update({
-      "cartId": cartId,
-      "cartName": cartName,
-      "cartImage": cartImage,
-      "cartPrice": cartPrice,
-      "cartQuantity": cartQuantity,
-      "isAdd": true
-    });
-  }
-
-
-  //To Get Specific data we use where condition
-  //To Get All Data we use For Each
-
 }
