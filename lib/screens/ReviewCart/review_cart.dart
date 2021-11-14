@@ -38,7 +38,7 @@ class _ReviewCartState extends State<ReviewCart> {
 
   @override
   Widget build(BuildContext context) {
-    reviewCartProvider = Provider.of(context);
+    reviewCartProvider = Provider.of<ReviewCartProvider>(context);
     reviewCartProvider.getReviewCartData();
     return Scaffold(
         bottomNavigationBar: ListTile(

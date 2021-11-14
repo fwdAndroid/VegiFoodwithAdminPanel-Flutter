@@ -129,7 +129,7 @@ class _ProfileState extends State<Profile> {
               // ignore: prefer_const_constructors
               child: CircleAvatar(
                 // ignore: prefer_const_constructors
-                backgroundImage: NetworkImage(userData.userImage??
+                backgroundImage: NetworkImage(userData.userImage ??
                     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyuNFyw05KSucqjifL3PhDFrZLQh7QAS-DTw&usqp=CAU'),
                 radius: 45,
                 backgroundColor: Colors.white,
