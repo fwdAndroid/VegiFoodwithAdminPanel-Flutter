@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vegifood/config/config.dart';
+import 'package:vegifood/provider/user_provider.dart';
 import 'package:vegifood/widget/drawer.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
-
+  UserProvider userProvider;
+  Profile({required this.userProvider});
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -29,9 +30,13 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    var userData = widget.userProvider.currentUserData;
+
     return Scaffold(
       backgroundColor: primaryColor,
-      drawer: MyDrawer(),
+      drawer: MyDrawer(
+        userProvider: widget.userProvider,
+      ),
       appBar: AppBar(
         backgroundColor: primaryColor,
         elevation: 0,
@@ -74,7 +79,7 @@ class _ProfileState extends State<Profile> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Fawad',
+                                    userData.userName,
                                     style: TextStyle(
                                         color: textColor,
                                         fontSize: 14,
@@ -83,7 +88,7 @@ class _ProfileState extends State<Profile> {
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Text('fwdkaleem@gmail.com')
+                                  Text(userData.userEmail)
                                 ],
                               ),
                               CircleAvatar(
@@ -124,7 +129,7 @@ class _ProfileState extends State<Profile> {
               // ignore: prefer_const_constructors
               child: CircleAvatar(
                 // ignore: prefer_const_constructors
-                backgroundImage: NetworkImage(
+                backgroundImage: NetworkImage(userData.userImage??
                     'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyuNFyw05KSucqjifL3PhDFrZLQh7QAS-DTw&usqp=CAU'),
                 radius: 45,
                 backgroundColor: Colors.white,

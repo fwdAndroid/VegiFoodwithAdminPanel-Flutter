@@ -2,12 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:vegifood/config/config.dart';
+import 'package:vegifood/provider/user_provider.dart';
 import 'package:vegifood/screens/Profiles/profile.dart';
 import 'package:vegifood/screens/ReviewCart/review_cart.dart';
 import 'package:vegifood/screens/Wishlist/wishlistcart.dart';
 
 class MyDrawer extends StatefulWidget {
-  const MyDrawer({Key? key}) : super(key: key);
+  UserProvider userProvider;
+  MyDrawer({required this.userProvider});
 
   @override
   _MyDrawerState createState() => _MyDrawerState();
@@ -33,53 +35,66 @@ class _MyDrawerState extends State<MyDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    var userData = widget.userProvider.currentUserData;
     return Drawer(
       child: Container(
         color: primaryColor,
         child: ListView(
           children: [
             DrawerHeader(
-              child: Row(
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  // ignore: prefer_const_constructors
-                  CircleAvatar(
-                    backgroundColor: Colors.white54,
-                    radius: 43,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  // ignore: prefer_const_literals_to_create_immutables
+                  children: [
                     // ignore: prefer_const_constructors
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Colors.red,
-                    ),
-                  ),
-                  // ignore: prefer_const_constructors
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    // ignore: prefer_const_literals_to_create_immutables
-                    children: [
-                      const Text('Welcome Guest'),
-                      const SizedBox(
-                        height: 8,
+                    CircleAvatar(
+                      backgroundColor: Colors.white54,
+                      radius: 43,
+                      // ignore: prefer_const_constructors
+                      child: CircleAvatar(
+                        radius: 40,
+                        backgroundColor: Colors.yellow,
+                        backgroundImage: NetworkImage(userData.userImage ??
+                            "https://w7.pngwing.com/pngs/914/758/png-transparent-github-social-media-computer-icons-logo-android-github-logo-computer-wallpaper-banner.png"),
                       ),
-                      SizedBox(
-                        height: 25,
-                        child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            side: const BorderSide(width: 2),
-                          ),
-                          // ignore: prefer_const_constructors
-                          onPressed: () {}, child: Text('Login'),
+                    ),
+                    // ignore: prefer_const_constructors
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      // ignore: prefer_const_literals_to_create_immutables
+                      children: [
+                        Text(userData.userName),
+                        Text(
+                          userData.userEmail,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      )
-                    ],
-                  )
-                ],
+
+                        // const Text('Welcome Guest'),
+                        // const SizedBox(
+                        //   height: 8,
+                        // ),
+                        // SizedBox(
+                        //   height: 25,
+                        //   child: OutlinedButton(
+                        //     style: OutlinedButton.styleFrom(
+                        //       shape: RoundedRectangleBorder(
+                        //         borderRadius: BorderRadius.circular(15.0),
+                        //       ),
+                        //       side: const BorderSide(width: 2),
+                        //     ),
+                        //     // ignore: prefer_const_constructors
+                        //     onPressed: () {}, child: Text('Login'),
+                        //   ),
+                        // )
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
             listTile(icon: Icons.home_outlined, title: "Home", onTap: () {}),
@@ -99,7 +114,8 @@ class _MyDrawerState extends State<MyDrawer> {
               onTap: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                    builder: (ctx) => Profile(),
+                    builder: (ctx) =>
+                        Profile(userProvider: widget.userProvider),
                   ),
                 );
               },

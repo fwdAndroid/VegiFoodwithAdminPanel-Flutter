@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:vegifood/config/config.dart';
 import 'package:vegifood/dbfunctions/constructorclasses/singleproductherb.dart';
 import 'package:vegifood/provider/product_provider.dart';
+import 'package:vegifood/provider/user_provider.dart';
 import 'package:vegifood/screens/Product/productoverview.dart';
 import 'package:vegifood/screens/ReviewCart/review_cart.dart';
 import 'package:vegifood/screens/Search/search.dart';
@@ -31,9 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     productProvider = Provider.of(context);
+    UserProvider userProvider = Provider.of(context);
+    userProvider.getUserData();
     // productProvider.fetchHerbsProductData();
     return Scaffold(
-      drawer: MyDrawer(),
+      drawer: MyDrawer(
+        userProvider: userProvider,
+      ),
       appBar: AppBar(
         iconTheme: IconThemeData(color: textColor),
         backgroundColor: primaryColor,
