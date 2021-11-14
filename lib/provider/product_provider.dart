@@ -48,7 +48,7 @@ class ProductProvider with ChangeNotifier {
     List<ProductModel> newList = [];
 
     QuerySnapshot value =
-        await FirebaseFirestore.instance.collection("FreshProduct").get();
+        await FirebaseFirestore.instance.collection("FruitsProduct").get();
 
     value.docs.forEach(
       (element) {
@@ -65,27 +65,6 @@ class ProductProvider with ChangeNotifier {
   }
 
 //////////////// Root Product ///////////////////////////////////////
-  List<ProductModel> rootProductList = [];
-
-  fatchRootProductData() async {
-    List<ProductModel> newList = [];
-
-    QuerySnapshot value =
-        await FirebaseFirestore.instance.collection("RootProduct").get();
-
-    value.docs.forEach(
-      (element) {
-        productModels(element);
-        newList.add(productModel);
-      },
-    );
-    rootProductList = newList;
-    notifyListeners();
-  }
-
-  List<ProductModel> get getRootProductDataList {
-    return rootProductList;
-  }
 
   /////////////////// Search Return ////////////
   List<ProductModel> get gerAllProductSearch {
