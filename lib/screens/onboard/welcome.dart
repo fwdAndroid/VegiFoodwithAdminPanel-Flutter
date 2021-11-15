@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vegifood/screens/mainappscreens/mapscreen.dart';
 import 'package:vegifood/screens/onboard/onboardingscreen.dart';
 import 'package:vegifood/screens/provider/auth_providers.dart';
+import 'package:vegifood/screens/provider/location_providers.dart';
 
 class Welcome extends StatefulWidget {
   static const String id = 'welcome-screen';
@@ -84,7 +86,7 @@ class _WelcomeState extends State<Welcome> {
                               authProvider
                                   .verifyPhone(context, number)
                                   .then((value) {
-                                phoneController.clear(); 
+                                phoneController.clear();
                               });
                             },
                             child: Text(_validPhoneNumber
@@ -97,6 +99,7 @@ class _WelcomeState extends State<Welcome> {
               }));
     }
 
+    final locationData = Provider.of<LocationProvider>(context, listen: false);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -119,8 +122,16 @@ class _WelcomeState extends State<Welcome> {
                 ),
                 TextButton(
                     // ignore: prefer_const_constructors
-                    onPressed: () {},
-                    child: Text('Set Delivery Location')),
+                    onPressed: () async {
+                      await locationData.getCurrentPosition();
+
+                      if (locationData.isPermissionAllowed == true) {
+                        Navigator.pushReplacementNamed(context, MapScreen.id);
+                      } else {
+                        print('Permisssion Failed');
+                      }
+                    },
+                    child: const Text('Get Delivery Location')),
                 const SizedBox(
                   height: 20,
                 ),
