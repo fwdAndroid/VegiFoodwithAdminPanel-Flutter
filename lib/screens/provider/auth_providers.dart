@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vegifood/screens/mainappscreens/homescreen.dart';
@@ -24,11 +26,11 @@ class AuthProvider with ChangeNotifier {
         }
       },
       codeSent: (String verificationId, int? resendToken) {
-        this.verificationCode = verificationId;
+        verificationCode = verificationId;
         smsOtpDialog(context, number);
       },
       codeAutoRetrievalTimeout: (String verificationId) {
-        this.verificationCode = verificationId;
+        verificationCode = verificationId;
       },
     );
   }
@@ -39,6 +41,7 @@ class AuthProvider with ChangeNotifier {
         builder: (context) {
           return AlertDialog(
             title: Column(
+              // ignore: prefer_const_literals_to_create_immutables
               children: [
                 Text('Verification Code'),
                 SizedBox(
@@ -54,7 +57,7 @@ class AuthProvider with ChangeNotifier {
               height: 85,
               child: TextField(
                 onChanged: (val) {
-                  this.smsOtp = val;
+                  smsOtp = val;
                 },
                 maxLength: 6,
                 keyboardType: TextInputType.number,
@@ -77,21 +80,21 @@ class AuthProvider with ChangeNotifier {
                           id: user!.uid,
                           phonenumber: user.phoneNumber.toString());
                       //Navigate to next screen
+                      // ignore: unnecessary_null_comparison
                       if (user != null) {
                         Navigator.pop(context);
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (ctx) => HomeScreen()));
+                        Navigator.pushReplacementNamed(context, HomeScreen.id);
                       } else {
                         print('Authentication Failed');
                       }
                     } catch (e) {
-                      this.error = 'Invalide OTP';
+                      error = 'Invalide OTP';
                       notifyListeners();
                       print(e.toString());
                       Navigator.pop(context);
                     }
                   },
-                  child: Text('OK'))
+                  child: const Text('OK'))
             ],
           );
         });

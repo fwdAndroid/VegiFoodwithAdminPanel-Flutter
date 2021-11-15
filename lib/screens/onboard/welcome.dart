@@ -4,6 +4,7 @@ import 'package:vegifood/screens/onboard/onboardingscreen.dart';
 import 'package:vegifood/screens/provider/auth_providers.dart';
 
 class Welcome extends StatefulWidget {
+  static const String id = 'welcome-screen';
   const Welcome({Key? key}) : super(key: key);
 
   @override

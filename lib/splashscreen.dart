@@ -6,6 +6,8 @@ import 'package:vegifood/screens/mainappscreens/homescreen.dart';
 import 'package:vegifood/screens/onboard/welcome.dart';
 
 class SplashScreen extends StatefulWidget {
+  static const String id = 'splash-screen';
+
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
@@ -21,11 +23,9 @@ class _SplashScreenState extends State<SplashScreen> {
         const Duration(seconds: 3),
         () => FirebaseAuth.instance.authStateChanges().listen((User? user) {
               if (user == null) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Welcome()));
+                Navigator.pushReplacementNamed(context, Welcome.id);
               } else {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()));
+                Navigator.pushReplacementNamed(context, HomeScreen.id);
               }
             }));
   }
