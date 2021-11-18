@@ -46,6 +46,7 @@ dependencies:
   geolocator_web: ^2.0.6
   google_maps_flutter: ^2.1.0
   flutter_geocoder: ^0.2.2-nullsafety
+  flutter_spinkit: ^5.1.0
 
 dev_dependencies:
   flutter_test:

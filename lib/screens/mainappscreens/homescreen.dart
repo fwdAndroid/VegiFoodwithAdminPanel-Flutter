@@ -15,13 +15,18 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: TextButton(
-            onPressed: () {
-              FirebaseAuth.instance.signOut();
-              Navigator.pushReplacementNamed(context, Welcome.id);
-            },
-            child: Text('Logout')),
+      body: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Center(
+            child: TextButton(
+                onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacementNamed(context, Welcome.id);
+                },
+                child: Text('Logout')),
+          ),
+        ],
       ),
     );
   }

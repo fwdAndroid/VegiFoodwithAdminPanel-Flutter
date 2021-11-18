@@ -7,6 +7,7 @@ class LocationProvider with ChangeNotifier {
   late double latitude;
   late double longitude;
   bool isPermissionAllowed = false;
+  bool loading = false;
   var selectedAddress;
 
 //Get Current Position
@@ -17,6 +18,12 @@ class LocationProvider with ChangeNotifier {
       // ignore: unnecessary_this
       this.latitude = position.latitude;
       this.longitude = position.longitude;
+
+      final coordinates = Coordinates(this.latitude, this.longitude);
+      final addresses =
+          await Geocoder.local.findAddressesFromCoordinates(coordinates);
+      this.selectedAddress = addresses.first;
+
       // ignore: unnecessary_this
       this.isPermissionAllowed = true;
       notifyListeners();
