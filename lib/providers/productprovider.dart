@@ -3,13 +3,44 @@ import 'package:flutter/cupertino.dart';
 import 'package:vegifood/models/product_model.dart';
 
 class ProductProvider with ChangeNotifier {
-  
-  
-  // Herbs 
-  List<ProductModel> herbsProductList = [];
   late ProductModel productModel;
 
-  //Fetch Data From Firebase Using Provider
+//Manage Products
+  productModels(QueryDocumentSnapshot queryDocumentSnapshot) {
+    productModel = ProductModel(
+        productName: queryDocumentSnapshot.get('productName'),
+        productImage: queryDocumentSnapshot.get('productImage'),
+        productPrice: queryDocumentSnapshot.get('productPrice'));
+  }
+
+  /////////Fruits Product/////////////
+  List<ProductModel> fruitsProductList = [];
+
+//Fetch Data From Firebase Using Provider
+  fetchfruitsProducts() async {
+    List<ProductModel> newfruitsProductList = [];
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('FruitsProducts').get();
+
+    querySnapshot.docs.forEach(
+      (productIndex) {
+        productModels(productIndex);
+
+        newfruitsProductList.add(productModel);
+      },
+    );
+    fruitsProductList = newfruitsProductList;
+    notifyListeners();
+  }
+
+//Return Data From Provider
+  List<ProductModel> get getfruitrsProductList {
+    return fruitsProductList;
+  }
+
+/////////////////////// Herbs Products..////////////
+  List<ProductModel> herbsProductList = [];
+//Fetch Data From Firebase Using Provider
   fetchHerbsProducts() async {
     List<ProductModel> newherbsProductList = [];
     QuerySnapshot querySnapshot =
@@ -18,11 +49,7 @@ class ProductProvider with ChangeNotifier {
     querySnapshot.docs.forEach(
       (productIndex) {
         print(productIndex);
-        productModel = ProductModel(
-          productName: productIndex.get('productName'),
-          productImage: productIndex.get('productImage'),
-          productPrice: productIndex.get('productPrice'),
-        );
+        productModels(productIndex);
         newherbsProductList.add(productModel);
       },
     );
@@ -30,8 +57,8 @@ class ProductProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  //Return Data From Provider
- List<ProductModel> get getHerbsProductList {
+//Return Data From Provider
+  List<ProductModel> get getHerbsProductList {
     return herbsProductList;
   }
 }

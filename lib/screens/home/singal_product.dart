@@ -31,7 +31,7 @@ class SingalProduct extends StatelessWidget {
                 GestureDetector(
                   onTap: onTap,
                   child: Container(
-                    height: 150,
+                    height: 170,
                     padding: EdgeInsets.all(5),
                     width: double.infinity,
                     child: Image.network(productImage),

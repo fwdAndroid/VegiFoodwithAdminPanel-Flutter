@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // TODO: implement initState
     productProvider = Provider.of(context, listen: false);
     productProvider.fetchHerbsProducts();
+    productProvider.fetchfruitsProducts();
     super.initState();
   }
 
@@ -253,34 +254,30 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-        // SingleChildScrollView(
-        //   scrollDirection: Axis.horizontal,
-        //   child: Row(
-        //     children: productProvider.getFreshProductDataList.map(
-        //       (freshProductData) {
-        //         return SingalProduct(
-        //           onTap: () {
-        //             Navigator.of(context).push(
-        //               MaterialPageRoute(
-        //                 builder: (context) => ProductOverview(
-        //                   productId: freshProductData.productId,
-        //                   productImage: freshProductData.productImage,
-        //                   productName: freshProductData.productName,
-        //                   productPrice: freshProductData.productPrice,
-        //                 ),
-        //               ),
-        //             );
-        //           },
-        //           productId: freshProductData.productId,
-        //           productImage: freshProductData.productImage,
-        //           productName: freshProductData.productName,
-        //           productPrice: freshProductData.productPrice,
-        //           productUnit:freshProductData,
-        //         );
-        //       },
-        //     ).toList(),
-        //   ),
-        // ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+              children: productProvider.getfruitrsProductList.map(
+            (fruitsProductData) {
+              return SingalProduct(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ProductOverview(
+                        productName: fruitsProductData.productName,
+                        productImage: fruitsProductData.productImage,
+                        productPrice: fruitsProductData.productPrice,
+                      ),
+                    ),
+                  );
+                },
+                productPrice: fruitsProductData.productPrice,
+                productImage: fruitsProductData.productImage,
+                productName: fruitsProductData.productName,
+              );
+            },
+          ).toList()),
+        ),
       ],
     );
   }
