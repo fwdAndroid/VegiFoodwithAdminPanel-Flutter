@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:vegifood/providers/productprovider.dart';
 import 'package:vegifood/screens/config.dart';
+import 'package:vegifood/screens/home/singal_product.dart';
 import 'package:vegifood/screens/product_overview/product_overview.dart';
+import 'package:vegifood/screens/reviewcart/reviewcart.dart';
 import 'package:vegifood/screens/search/search.dart';
 import 'package:vegifood/widgets/drawerside.dart';
 
@@ -12,8 +16,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late ProductProvider productProvider;
+  @override
+  void initState() {
+    // TODO: implement initState
+    productProvider = Provider.of(context, listen: false);
+    productProvider.fetchHerbsProducts();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    productProvider = Provider.of(context);
     return Scaffold(
       drawer: DrawerSide(),
       appBar: AppBar(
@@ -46,11 +60,11 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 5),
             child: GestureDetector(
               onTap: () {
-                // Navigator.of(context).push(
-                //   MaterialPageRoute(
-                //     builder: (context) => ReviewCart(),
-                //   ),
-                // );
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ReviewCart(),
+                  ),
+                );
               },
               child: CircleAvatar(
                 backgroundColor: Color(0xffd6d382),
@@ -182,37 +196,30 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-        // SingleChildScrollView(
-        //   scrollDirection: Axis.horizontal,
-        //   child: Row(
-        //     children: productProvider.getHerbsProductDataList.map(
-        //       (herbsProductData) {
-        //         return SingalProduct(
-        //           onTap: () {
-        //             Navigator.of(context).push(
-        //               MaterialPageRoute(
-        //                 builder: (context) => ProductOverview(
-        //                   productId: herbsProductData.productId,
-        //                   productPrice: herbsProductData.productPrice,
-        //                   productName: herbsProductData.productName,
-        //                   productImage: herbsProductData.productImage,
-        //                 ),
-        //               ),
-        //             );
-        //           },
-        //           productId: herbsProductData.productId,
-        //           productPrice: herbsProductData.productPrice,
-        //           productImage: herbsProductData.productImage,
-        //           productName: herbsProductData.productName,
-        //           productUnit:herbsProductData ,
-        //         );
-        //       },
-        //     ).toList(),
-        //     // children: [
-
-        //     // ],
-        //   ),
-        // ),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+              children: productProvider.getHerbsProductList.map(
+            (herbsProductData) {
+              return SingalProduct(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ProductOverview(
+                        productName: herbsProductData.productName,
+                        productImage: herbsProductData.productImage,
+                        productPrice: herbsProductData.productPrice,
+                      ),
+                    ),
+                  );
+                },
+                productPrice: herbsProductData.productPrice,
+                productImage: herbsProductData.productImage,
+                productName: herbsProductData.productName,
+              );
+            },
+          ).toList()),
+        ),
       ],
     );
   }
@@ -227,18 +234,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (builder) => ProductOverview(
-                                  productImage:
-                                      'https://www.seekpng.com/png/detail/62-622889_fruit-basket-png-vector-clipart-fruit-basket-vector.png',
-                                  productName: 'Fruits Bresuyk',
-                                )));
-                  },
-                  child: Text('Fresh Fruits')),
+              Text('Fresh Fruits'),
               GestureDetector(
                 onTap: () {
                   // Navigator.of(context).push(
