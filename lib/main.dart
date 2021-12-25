@@ -1,30 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:vegifood/screens/authentications/loginscreen.dart';
-import 'package:vegifood/screens/mainappscreens/homescreen.dart';
-import 'package:vegifood/screens/mainappscreens/mapscreen.dart';
-import 'package:vegifood/screens/onboard/welcome.dart';
-import 'package:vegifood/screens/provider/auth_providers.dart';
-import 'package:vegifood/screens/provider/location_providers.dart';
-import 'package:vegifood/splashscreen.dart';
+import 'package:vegifood/screens/authenticationscreens/signinpage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => AuthProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => LocationProvider(),
-        )
-      ],
-      child: MyApp(),
-    ),
+    MyApp(),
   );
 }
 
@@ -35,14 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: SplashScreen.id,
-      routes: {
-        HomeScreen.id: (context) => HomeScreen(),
-        Welcome.id: (context) => Welcome(),
-        SplashScreen.id: (context) => SplashScreen(),
-        MapScreen.id: (context) => MapScreen(),
-        LoginScreen.id: (context) => LoginScreen()
-      },
+      home: SignIn(),
     );
   }
 }
