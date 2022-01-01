@@ -1,8 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:vegifood/providers/productprovider.dart';
-import 'package:vegifood/screens/authenticationscreens/signinpage.dart';
+import 'package:vegifood/screens/splash/splash_screens.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,11 +17,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ProductProvider>(
-      create: (Ctx) => ProductProvider(),
-      child: MaterialApp(
-        home: SignIn(),
-      ),
+    return MaterialApp(
+      title: "Pizzato",
+      home: SplashScreen(),
     );
   }
 }
