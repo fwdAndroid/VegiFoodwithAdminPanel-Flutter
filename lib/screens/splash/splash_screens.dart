@@ -22,10 +22,11 @@ class _SplashScreenState extends State<SplashScreen> {
               Navigator.pushReplacement(
                   context,
                   PageTransition(
-                      type: PageTransitionType.rightToLeft, child: HomeScreen()))
+                      type: PageTransitionType.rightToLeft,
+                      child: HomeScreen()))
             });
     super.initState();
-  }
+  } 
 
   @override
   Widget build(BuildContext context) {

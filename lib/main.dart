@@ -1,5 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:vegifood/DataServices/managedata.dart';
+import 'package:vegifood/Helpers/headers.dart';
+import 'package:vegifood/Helpers/middle.dart';
 import 'package:vegifood/screens/splash/splash_screens.dart';
 
 Future<void> main() async {
@@ -17,9 +21,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Pizzato",
-      home: SplashScreen(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: Headers()),
+        ChangeNotifierProvider.value(
+          value: MiddleHelpers(),
+        ),
+        ChangeNotifierProvider.value(
+          value: ManageData(),
+        ),
+      ],
+      child: MaterialApp(
+        title: "Pizzato",
+        home: SplashScreen(),
+      ),
     );
   }
 }
