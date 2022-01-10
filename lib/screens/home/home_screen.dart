@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vegifood/DataServices/managedata.dart';
+import 'package:vegifood/Helpers/footer.dart';
 import 'package:vegifood/Helpers/headers.dart';
 import 'package:vegifood/Helpers/middle.dart';
 
@@ -16,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: Footer().floatingActionButton(context),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Padding(

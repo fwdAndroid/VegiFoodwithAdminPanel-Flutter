@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:vegifood/DataServices/managedata.dart';
+import 'package:vegifood/screens/detail/detail_screen.dart';
 
 class MiddleHelpers with ChangeNotifier {
   Widget favText() {
@@ -46,7 +48,15 @@ class MiddleHelpers with ChangeNotifier {
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushReplacement(
+                        context,
+                        PageTransition(
+                            child: DetailScreen(
+                              queryDocumentSnapshot: snapshot.data[index],
+                            ),
+                            type: PageTransitionType.bottomToTop));
+                  },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(

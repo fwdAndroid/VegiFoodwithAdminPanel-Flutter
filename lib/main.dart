@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vegifood/DataServices/managedata.dart';
+import 'package:vegifood/Helpers/footer.dart';
 import 'package:vegifood/Helpers/headers.dart';
 import 'package:vegifood/Helpers/middle.dart';
 import 'package:vegifood/screens/splash/splash_screens.dart';
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: ManageData(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Footer(),
         ),
       ],
       child: MaterialApp(
