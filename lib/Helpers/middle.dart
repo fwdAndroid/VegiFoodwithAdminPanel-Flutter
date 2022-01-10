@@ -17,7 +17,7 @@ class MiddleHelpers with ChangeNotifier {
               fontSize: 36),
           children: <TextSpan>[
             TextSpan(
-              text: 'dishes',
+              text: ' dishes',
               style: TextStyle(
                   shadows: [BoxShadow(color: Colors.grey, blurRadius: 0)],
                   fontSize: 22,
@@ -171,5 +171,123 @@ class MiddleHelpers with ChangeNotifier {
         },
       ),
     );
+  }
+
+  Widget businesssText() {
+    return RichText(
+      text: TextSpan(
+          text: ' Businesss',
+          style: TextStyle(
+              shadows: [BoxShadow(color: Colors.black, blurRadius: 1)],
+              fontWeight: FontWeight.w200,
+              color: Colors.black,
+              fontSize: 36),
+          children: <TextSpan>[
+            TextSpan(
+              text: ' lunch',
+              style: TextStyle(
+                  shadows: [BoxShadow(color: Colors.grey, blurRadius: 0)],
+                  fontSize: 22,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black),
+            ),
+          ]),
+    );
+  }
+
+  //Bussiness Logic Widget
+  Widget dataBussiness(BuildContext context, String collection) {
+    return Container(
+        height: 300,
+        child: FutureBuilder(
+            future: Provider.of<ManageData>(context, listen: false)
+                .fetchData(collection),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: Lottie.network(
+                      'https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/A.json'),
+                );
+              }
+              return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(40),
+                            ),
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.grey.shade500,
+                                  blurRadius: 5,
+                                  spreadRadius: 3)
+                            ]),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  snapshot.data[index].data()['name'],
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+                                Text(
+                                  snapshot.data[index].data()['category'],
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.cyan),
+                                ),
+                                Text(
+                                  snapshot.data[index]
+                                      .data()['notPrice']
+                                      .toString(),
+                                  style: TextStyle(
+                                      decoration: TextDecoration.lineThrough,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.cyan),
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      FontAwesomeIcons.rupeeSign,
+                                      size: 10,
+                                    ),
+                                    Text(
+                                      snapshot.data[index]
+                                          .data()['price']
+                                          .toString(),
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 200,
+                              child: Image.network(
+                                snapshot.data[index].data()['image'],
+                                fit: BoxFit.fitWidth,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  });
+            }));
   }
 }

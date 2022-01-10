@@ -29,7 +29,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 Headers().headerMenu(context),
                 Divider(),
                 MiddleHelpers().favText(),
-                MiddleHelpers().dataFav(context, 'favourite')
+                MiddleHelpers().dataFav(context, 'favourite'),
+                MiddleHelpers().businesssText(),
+                MiddleHelpers().dataBussiness(context, 'business')
               ],
             ),
           ),
