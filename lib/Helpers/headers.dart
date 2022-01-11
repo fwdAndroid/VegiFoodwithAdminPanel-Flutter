@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:vegifood/DataServices/mapdata.dart';
 
 class Headers with ChangeNotifier {
   Widget appBar(BuildContext context) {
@@ -17,7 +18,7 @@ class Headers with ChangeNotifier {
             children: [
               Icon(FontAwesomeIcons.locationArrow),
               Text(
-                'New Police Area',
+                finalAddress,
                 style: TextStyle(
                     color: Colors.grey.shade600,
                     fontSize: 12,

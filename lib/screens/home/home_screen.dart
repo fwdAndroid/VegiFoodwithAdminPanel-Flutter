@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vegifood/DataServices/managedata.dart';
+import 'package:vegifood/DataServices/mapdata.dart';
 import 'package:vegifood/Helpers/footer.dart';
 import 'package:vegifood/Helpers/headers.dart';
 import 'package:vegifood/Helpers/middle.dart';
@@ -13,6 +14,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    
+    // TODO: implement initState
+    Provider.of<GenerateMap>(context, listen: false).getCurrentUserLocation();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
