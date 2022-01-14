@@ -3,6 +3,8 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
+import 'package:vegifood/DataServices/calculations.dart';
 import 'package:vegifood/screens/cart/mycart.dart';
 import 'package:vegifood/screens/home/home_screen.dart';
 
@@ -18,7 +20,6 @@ class _DetailScreenState extends State<DetailScreen> {
   var cheeseValue = 0;
   var onionValue = 0;
   var becanValue = 0;
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -56,8 +57,15 @@ class _DetailScreenState extends State<DetailScreen> {
             icon: Icon(Icons.arrow_back_ios)),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child:
-              IconButton(onPressed: () {}, icon: Icon(FontAwesomeIcons.trash)),
+          child: IconButton(
+              onPressed: () {
+                Provider.of<Calculations>(context, listen: false)
+                    .removeAllData();
+              },
+              icon: Icon(
+                FontAwesomeIcons.trash,
+                color: Colors.red,
+              )),
         )
       ],
     );
@@ -170,16 +178,24 @@ class _DetailScreenState extends State<DetailScreen> {
                     Row(
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Provider.of<Calculations>(context, listen: false)
+                                .minusCheese();
+                          },
                           icon: Icon(EvaIcons.minus),
                         ),
                         Text(
-                          '${cheeseValue}',
+                          Provider.of<Calculations>(context, listen: true)
+                              .getcheeseValue
+                              .toString(),
                           style: TextStyle(
                               fontSize: 20, color: Colors.grey.shade500),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Provider.of<Calculations>(context, listen: false)
+                                .addCheese();
+                          },
                           icon: Icon(EvaIcons.plus),
                         ),
                       ],
@@ -198,16 +214,24 @@ class _DetailScreenState extends State<DetailScreen> {
                     Row(
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Provider.of<Calculations>(context, listen: false)
+                                .minusOnion();
+                          },
                           icon: Icon(EvaIcons.minus),
                         ),
                         Text(
-                          ' ${onionValue}',
+                          Provider.of<Calculations>(context, listen: true)
+                              .getonionValue
+                              .toString(),
                           style: TextStyle(
                               fontSize: 20, color: Colors.grey.shade500),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Provider.of<Calculations>(context, listen: false)
+                                .addOnion();
+                          },
                           icon: Icon(EvaIcons.plus),
                         ),
                       ],
@@ -226,16 +250,24 @@ class _DetailScreenState extends State<DetailScreen> {
                     Row(
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Provider.of<Calculations>(context, listen: false)
+                                .minusBeacon();
+                          },
                           icon: Icon(EvaIcons.minus),
                         ),
                         Text(
-                          ' ${becanValue}',
+                          Provider.of<Calculations>(context, listen: true)
+                              .getbeconValue
+                              .toString(),
                           style: TextStyle(
                               fontSize: 20, color: Colors.grey.shade500),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Provider.of<Calculations>(context, listen: false)
+                                .addBeacon();
+                          },
                           icon: Icon(EvaIcons.plus),
                         ),
                       ],
@@ -249,9 +281,16 @@ class _DetailScreenState extends State<DetailScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               GestureDetector(
+                onTap: () {
+                  Provider.of<Calculations>(context, listen: false)
+                      .selectedSmallSize();
+                },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.redAccent,
+                    color: Provider.of<Calculations>(context, listen: true)
+                            .smallTapped
+                        ? Colors.red
+                        : Colors.white,
                     border: Border.all(color: Colors.red),
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -265,9 +304,16 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
               ),
               GestureDetector(
+                onTap: () {
+                  Provider.of<Calculations>(context, listen: false)
+                      .selectedMediumSize();
+                },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.redAccent,
+                    color: Provider.of<Calculations>(context, listen: true)
+                            .mediumTapped
+                        ? Colors.red
+                        : Colors.white,
                     border: Border.all(color: Colors.red),
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -281,9 +327,16 @@ class _DetailScreenState extends State<DetailScreen> {
                 ),
               ),
               GestureDetector(
+                onTap: () {
+                  Provider.of<Calculations>(context, listen: false)
+                      .selectedLargeSize();
+                },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.redAccent,
+                    color: Provider.of<Calculations>(context, listen: true)
+                            .largeTapped
+                        ? Colors.red
+                        : Colors.white,
                     border: Border.all(color: Colors.red),
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -307,8 +360,23 @@ class _DetailScreenState extends State<DetailScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        GestureDetector(
-          onTap: () {},
+        InkWell(
+          onTap: () {
+            Provider.of<Calculations>(context, listen: false)
+                .addToCart(context, {
+              'image': widget.queryDocumentSnapshot['image'],
+              'name': widget.queryDocumentSnapshot['name'],
+              'price': widget.queryDocumentSnapshot['price'],
+              'onion': Provider.of<Calculations>(context, listen: false)
+                  .getonionValue,
+              'beacon': Provider.of<Calculations>(context, listen: false)
+                  .getbeconValue,
+              'cheese': Provider.of<Calculations>(context, listen: false)
+                  .getcheeseValue,
+              'size': Provider.of<Calculations>(context, listen: false)
+                  .getSize
+            });
+          },
           child: Container(
             decoration: BoxDecoration(
                 color: Colors.red.shade500,

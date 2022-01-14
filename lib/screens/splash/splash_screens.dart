@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:vegifood/screens/authentication/login.dart';
 import 'package:vegifood/screens/home/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -23,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   context,
                   PageTransition(
                       type: PageTransitionType.rightToLeft,
-                      child: HomeScreen()))
+                      child: LoginScreen()))
             });
     super.initState();
   } 
